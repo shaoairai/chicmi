@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+body{
+  font-family: 'Noto Sans TC', sans-serif !important;
+  background: $dark !important;
+  color:white !important;
+}
+
+.brLine {
+  width: 10%;
+  height: 3px;
+  background: $primary;
+  margin: 0 auto;
+  border-radius: 100px;
+}
+
+.text-decoration-none{
+  text-decoration: none;
+}
+
+// swiper 客製化
+.swiper-pagination-bullet{
+  background: white !important;
+}
+.swiper-pagination-bullet-active {
+  background: $primary !important;
+}
