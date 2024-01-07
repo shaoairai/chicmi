@@ -1,15 +1,15 @@
 <script>
-import { RouterLink } from 'vue-router';
-import { mapState, mapActions } from 'pinia';
-import { cartStore } from '../../stores/counter'
-import { login } from '../../utils/token/getToken';
+import { RouterLink } from "vue-router";
+import { mapState, mapActions } from "pinia";
+import { cartStore } from "../../stores/counter";
+import { login } from "../../utils/token/getToken";
 
 export default {
   data() {
     return {
       text: "Products頁",
       token: "",
-    }
+    };
   },
   methods: {
     takeToken() {
@@ -22,13 +22,13 @@ export default {
       return token;
     },
     // 該產品+1
-    ...mapActions(cartStore, ['plusProduct', 'minusProduct', 'delProduct']),
+    ...mapActions(cartStore, ["plusProduct", "minusProduct", "delProduct"]),
   },
   components: {
-    RouterLink
+    RouterLink,
   },
   computed: {
-    ...mapState(cartStore, ['productList', 'deliveryFee', 'calcTotal']),
+    ...mapState(cartStore, ["productList", "deliveryFee", "calcTotal"]),
   },
   async mounted() {
     let takenToken = this.takeToken();
@@ -42,12 +42,12 @@ export default {
       takenToken = this.takeToken();
       this.token = takenToken;
     }
-  }
-}
+  },
+};
 </script>
 
 <template>
-  <section class="bg-lightgray">
+  <section>
     <!-- 無資料 -->
     <div class="py-5 container" v-if="productList.length <= 0">
       <div class="fs-2">購物車無資料</div>
@@ -66,47 +66,68 @@ export default {
       </div>
       <div class="row">
         <div class="col">
-          <div class="products-list-area px-3 bg-white rounded-3">
+          <div class="products-list-area px-3 rounded-3">
             <template v-for="(item, index) in productList" :key="item.id">
               <!-- 單一品項 -->
               <div class="row align-items-center py-3">
                 <div class="col w-100 overflow-hidden">
-                  <div class="position-relative" style="padding-top: 100%;">
-                    <img :src="item.img" class="position-absolute top-0 start-0 w-100 h-100 rounded-3"
-                      style="object-fit: cover;" alt="...">
+                  <div class="position-relative" style="padding-top: 100%">
+                    <img
+                      :src="item.img"
+                      class="position-absolute top-0 start-0 w-100 h-100 rounded-3"
+                      style="object-fit: cover"
+                      alt="..."
+                    />
                   </div>
                 </div>
-                <div class="col d-flex justify-content-center">{{ item.name }}</div>
-                <div class="col d-flex justify-content-center">NT$ {{ item.price }}</div>
-                <div class="col d-flex justify-content-center align-items-center">
+                <div class="col d-flex justify-content-center">
+                  {{ item.name }}
+                </div>
+                <div class="col d-flex justify-content-center">
+                  NT$ {{ item.price }}
+                </div>
+                <div
+                  class="col d-flex justify-content-center align-items-center"
+                >
                   <div @click="minusProduct(item)" class="cursor-pointer">
                     <i class="bi bi-dash-circle-fill text-primary fs-4"></i>
                   </div>
-                  <input type="number" class="input-number mx-2" v-model="item.number" readonly />
+                  <input
+                    type="number"
+                    class="input-number mx-2"
+                    v-model="item.number"
+                    readonly
+                  />
                   <div @click="plusProduct(item)" class="cursor-pointer">
                     <i class="bi bi-plus-circle-fill text-primary fs-4"></i>
                   </div>
                 </div>
-                <div class="col d-flex justify-content-center">NT$ {{ item.price * item.number }}</div>
-                <div class="col d-flex justify-content-center cursor-pointer" @click="delProduct(item)">X</div>
+                <div class="col d-flex justify-content-center">
+                  NT$ {{ item.price * item.number }}
+                </div>
+                <div
+                  class="col d-flex justify-content-center cursor-pointer"
+                  @click="delProduct(item)"
+                >
+                  X
+                </div>
               </div>
-              <div class="section-line" v-if="index < productList.length - 1"></div>
+              <div
+                class="section-line"
+                v-if="index < productList.length - 1"
+              ></div>
             </template>
           </div>
         </div>
       </div>
       <div class="row py-3">
         <div class="text-end">
-          <div class="col">
-            運費：NT$ {{ deliveryFee }}
-          </div>
+          <div class="col">運費：NT$ {{ deliveryFee }}</div>
         </div>
       </div>
       <div class="row pb-4">
         <h4 class="text-end">
-          <div class="col">
-            總計：NT$ {{ calcTotal }}
-          </div>
+          <div class="col">總計：NT$ {{ calcTotal }}</div>
         </h4>
       </div>
       <div class="row">
@@ -130,12 +151,8 @@ export default {
   border-bottom: 2px solid $gray-300;
 }
 
-.bg-lightgray {
-  background: $gray-200;
-}
-
 .products-list-area {
-  box-shadow: 0px 2px 4px 2px lightgray;
+  box-shadow: 0px 2px 4px 2px $black;
 }
 
 .input-number {
@@ -144,14 +161,14 @@ export default {
   appearance: textfield;
 }
 
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>

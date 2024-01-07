@@ -1,3 +1,13 @@
+<script>
+import { RouterLink } from "vue-router";
+
+export default {
+  components: {
+    RouterLink,
+  },
+};
+</script>
+
 <template>
   <section>
     <div class="row g-0 flex-column flex-md-row">
@@ -20,9 +30,11 @@
               <i class="bi bi-telephone-fill pe-2"></i>聯絡電話：(03)831-1131
             </div>
             <div class="text-center pt-4">
-              <button type="button" class="btn btn-primary w-50">
-                致電訂位
-              </button>
+              <a href="tel:03-831-1131">
+                <button type="button" class="btn btn-primary w-50">
+                  致電訂位
+                </button></a
+              >
             </div>
           </div>
         </div>
@@ -36,9 +48,11 @@
             <h2 class="text-center pb-4">線上訂餐</h2>
             <div class="pb-1">線上完成點餐，立即享受美食！</div>
             <div class="text-center pt-4">
-              <button type="button" class="btn btn-primary w-50">
-                開始點餐
-              </button>
+              <RouterLink to="/products">
+                <button type="button" class="btn btn-primary w-50">
+                  開始點餐
+                </button>
+              </RouterLink>
             </div>
           </div>
         </div>

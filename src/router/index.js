@@ -20,6 +20,7 @@ const router = createRouter({
       path: "/",
       name: "main",
       component: MainView,
+      redirect: "home",
       children: [
         {
           path: "home",

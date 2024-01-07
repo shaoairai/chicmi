@@ -217,7 +217,7 @@ export default {
   .banner,
   .banner-text,
   .banner-bg {
-    height: calc(50vh - 66px);
+    height: calc(100vh - 180px);
   }
 }
 </style>
