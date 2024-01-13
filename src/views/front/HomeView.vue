@@ -10,7 +10,8 @@ import NumberView from "@/components/homeview/NumberView.vue";
 import SloganView from "@/components/homeview/SloganView.vue";
 import NewsView from "@/components/homeview/NewsView.vue";
 import InfoView from "@/components/homeview/InfoView.vue";
-// import { gsap } from 'gsap';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
   data() {
@@ -32,6 +33,7 @@ export default {
     },
     // 取得產品列表
     getProducts() {
+      const vm = this;
       console.log("取得產品列表");
       const conf = {
         method: "GET",
@@ -49,6 +51,14 @@ export default {
           // 存放所有產品
           const saveData = cartStore();
           saveData.saveProducts(res.data.products);
+
+          // 取完資料，再執行 gsap 設定
+          setTimeout(function () {
+            vm.gsapFeature();
+            // 取好資料後再執行，避免因為產品還沒放而跑版
+            vm.$refs.newsRef.gsapSwiper();
+            vm.$refs.infoRef.gsapInfo();
+          }, 2000);
         })
         .catch((err) => {
           console.log(err.response);
@@ -69,6 +79,54 @@ export default {
         }
       });
       return bool;
+    },
+    // gsap
+    gsapBanner(tl) {
+      tl.from(".banner-outer", {
+        y: 50,
+        duration: 1.5,
+        opacity: 0,
+        delay: 1,
+      });
+
+      tl.to(".gsap-banner-bg", {
+        opacity: 0,
+        y: "-10%",
+        scrollTrigger: {
+          trigger: ".gsap-banner-bg",
+          start: "80% 75%",
+          end: "80% top",
+          scrub: true,
+        },
+      });
+
+      tl.to(".banner-bg", {
+        width: "100%",
+        scrollTrigger: {
+          trigger: ".banner-bg",
+          start: "80% 75%",
+          end: "80% top",
+          scrub: true,
+        },
+      });
+    },
+    gsapFeature() {
+      gsap.utils.toArray(".card").forEach((item, i) => {
+        gsap.from(item, {
+          y: 100,
+          duration: 1,
+          // ease: Power2.inOut,
+          delay: i * 0.3, // 這樣就能依順序
+          opacity: 0,
+          scrollTrigger: {
+            trigger: ".feature",
+            start: "center 65%",
+            end: "center 65%",
+            toggleActions: "restart none reverse none",
+            // markers: true,
+          },
+        });
+      });
     },
   },
   computed: {
@@ -98,6 +156,12 @@ export default {
     }
 
     this.getProducts();
+
+    // gsap setting
+    gsap.registerPlugin(ScrollTrigger);
+    let tl = gsap.timeline({});
+
+    this.gsapBanner(tl);
   },
 };
 </script>
@@ -109,16 +173,18 @@ export default {
       class="banner-outer position-relative"
       style="height: calc(100vh - 130px)"
     >
-      <div
-        class="banner-bg mx-auto"
-        style="width: calc(100% - 80px)"
-        :style="{ backgroundImage: 'url(' + imgUrl + ')' }"
-      ></div>
-      <div class="banner position-absolute top-0 left-0 w-100">
-        <div class="banner-text w-100 d-flex align-items-center container">
-          <div class="text-white d-flex flex-column mb-5 ms-5">
-            <h2 class="fs-1 mb-4">Chic Mi Brunch</h2>
-            <h3 class="fs-4">The best of the day.</h3>
+      <div class="gsap-banner-bg">
+        <div
+          class="banner-bg mx-auto"
+          style="width: calc(100% - 80px)"
+          :style="{ backgroundImage: 'url(' + imgUrl + ')' }"
+        ></div>
+        <div class="banner position-absolute top-0 left-0 w-100">
+          <div class="banner-text w-100 d-flex align-items-center container">
+            <div class="text-white d-flex flex-column mb-5 ms-5">
+              <h2 class="fs-1 mb-4">Chic Mi Brunch</h2>
+              <h3 class="fs-4">The best of the day.</h3>
+            </div>
           </div>
         </div>
       </div>
@@ -132,7 +198,7 @@ export default {
     <!-- 精選熱銷 -->
     <section class="table-runner">
       <div class="py-5 container">
-        <h3 class="text-start py-5 text-center">精選熱銷 | Top 3</h3>
+        <h3 class="feature text-start py-5 text-center">精選熱銷 | Top 3</h3>
         <div class="row row-cols-1 row-cols-lg-3 g-4">
           <template v-for="(item, key, index) in products" :key="item.id">
             <div class="col" v-if="index > 0 && index < 4">
@@ -183,9 +249,9 @@ export default {
       </div>
     </section>
     <!-- 最新消息 -->
-    <NewsView></NewsView>
+    <NewsView ref="newsRef"></NewsView>
     <!-- 營業資訊 -->
-    <InfoView></InfoView>
+    <InfoView ref="infoRef"></InfoView>
   </div>
 </template>
 

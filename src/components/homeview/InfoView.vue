@@ -1,17 +1,39 @@
 <script>
 import { RouterLink } from "vue-router";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
   components: {
     RouterLink,
+  },
+  methods: {
+    gsapInfo() {
+      const vm = this;
+      gsap.utils.toArray(".infoArea").forEach((item, i) => {
+        gsap.from(item, {
+          y: 100,
+          opacity: 0,
+          duration: 1.5,
+          delay: i * 0.35,
+          scrollTrigger: {
+            trigger: vm.$refs.infoAreaOuter,
+            start: "top 80%",
+            end: "top 80%",
+            toggleActions: "restart none reverse none",
+            // markers: true,
+          },
+        });
+      });
+    },
   },
 };
 </script>
 
 <template>
   <section>
-    <div class="row g-0 flex-column flex-md-row">
-      <div class="col">
+    <div ref="infoAreaOuter" class="row g-0 flex-column flex-md-row">
+      <div class="infoArea col">
         <div class="position-relative">
           <div class="timeBg"></div>
           <div
@@ -39,7 +61,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="infoArea col">
         <div class="position-relative">
           <div class="orderBg"></div>
           <div
