@@ -7,6 +7,8 @@ import ProductsView from "../views/front/ProductsView.vue";
 import ProductView from "../views/front/ProductView.vue";
 import CartView from "../views/front/CartView.vue";
 import ContactView from "../views/front/ContactView.vue";
+import AdminView from "../views/admin/AdminView.vue";
+import ProductsAdmin from "../views/admin/pages/ProductsAdmin.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -51,13 +53,29 @@ const router = createRouter({
           path: "cart",
           name: "cart",
           component: CartView,
-          // component: () => import("../views/front/CartView.vue"),
         },
         {
           path: "contact",
           name: "contact",
           component: ContactView,
-          // component: () => import("../views/front/ContactView.vue"),
+        },
+      ],
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      redirect: "plist",
+      component: AdminView,
+      children: [
+        {
+          path: "/login",
+          name: "login",
+          component: LoginView,
+        },
+        {
+          path: "/plist",
+          name: "plist",
+          component: ProductsAdmin,
         },
       ],
     },

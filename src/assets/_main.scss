@@ -7,6 +7,10 @@ body{
   transition: none !important;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .brLine {
   width: 10%;
   height: 3px;
@@ -25,4 +29,11 @@ body{
 }
 .swiper-pagination-bullet-active {
   background: $primary !important;
+}
+
+// 按鈕 spinner
+.spinner-border {
+  width: 1rem !important;
+  height: 1rem !important;
+  border-width: 0.2rem !important;
 }
