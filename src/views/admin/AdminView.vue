@@ -14,7 +14,7 @@ export default {
     style=""
   >
     <h3 class="fw-bold text-primary pt-2">吃迷 CHIC MI</h3>
-    <h5 class="pt-1">後台管理系統</h5>
+    <h5 class="pt-1">產品管理系統</h5>
   </div>
   <RouterView />
 </template>

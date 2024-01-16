@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 
 import AddproductModal from "@/views/admin/pages/AddproductModal.vue";
 import EditproductModal from "@/views/admin/pages/EditproductModal.vue";
+import FinishPop from "@/components/popview/FinishPop.vue";
+import { Modal } from "bootstrap";
 
 export default {
   data() {
@@ -23,6 +25,11 @@ export default {
       editCheckBool: true,
       // 修改暫存產品資料
       productTmpData: {},
+
+      // 新增彈出視窗Modal
+      addProductPopModal: "",
+      // 編輯彈出視窗Modal
+      editProductPopModal: "",
     };
   },
   computed: {
@@ -33,6 +40,7 @@ export default {
     RouterView,
     AddproductModal,
     EditproductModal,
+    FinishPop,
   },
   methods: {
     takeToken() {
@@ -80,6 +88,11 @@ export default {
       });
       this.categories = categoriesArr;
     },
+    // 新增產品彈出視窗
+    addProductForm() {
+      this.addProductPopModal = new Modal("#addProductModal");
+      this.addProductPopModal.show();
+    },
     // 新增產品
     addProduct(value) {
       console.log(value);
@@ -117,11 +130,20 @@ export default {
       };
       axios(conf)
         .then((res) => {
-          alert("建立成功");
+          console.log("建立成功");
           console.log(res);
 
           // 恢復按鈕
           vm.addCheckBool = true;
+
+          // 關閉視窗
+          vm.addProductPopModal.hide();
+
+          // 清除表單
+          vm.$refs.refAddproductModal.formReset();
+
+          // 完成建立pop
+          vm.$refs.FinishPop.popshow("add");
 
           // 重取資料
           vm.getProducts();
@@ -135,6 +157,9 @@ export default {
       const vm = this;
       console.log("修改產品");
       console.log(product);
+
+      vm.editProductPopModal = new Modal("#editProductModal");
+      vm.editProductPopModal.show();
 
       // 目前內容存入
       const productTmp = JSON.parse(JSON.stringify(product));
@@ -178,14 +203,20 @@ export default {
       };
       axios(conf)
         .then((res) => {
-          alert("修改成功");
+          console.log("修改成功");
           console.log(res);
+
+          // 移除pop視窗
+          vm.editProductPopModal.hide();
 
           // 恢復按鈕
           vm.editCheckBool = true;
 
           // 重取資料
           vm.getProducts();
+
+          // 完成修改pop
+          vm.$refs.FinishPop.popshow("edit");
         })
         .catch((err) => {
           console.log(err.response);
@@ -242,14 +273,13 @@ export default {
         <div>
           <RouterLink to="/"
             ><font-awesome-icon icon="fa-solid fa-arrow-left-long" />
-            回到前台</RouterLink
-          >
+            回到前台
+          </RouterLink>
         </div>
         <div class="d-inline-block my-3">
           <div
             class="btn btn-primary d-flex align-items-center ms-auto"
-            data-bs-toggle="modal"
-            data-bs-target="#addProductModal"
+            @click="addProductForm"
           >
             <font-awesome-icon icon="fa-solid fa-circle-plus" />
             <span class="ps-1">新增產品</span>
@@ -289,12 +319,7 @@ export default {
               />
             </td>
             <td>
-              <div
-                class="cursor-pointer"
-                @click="editProduct(product)"
-                data-bs-toggle="modal"
-                data-bs-target="#editProductModal"
-              >
+              <div class="cursor-pointer" @click="editProduct(product)">
                 <font-awesome-icon icon="fa-solid fa-pen-to-square" />
               </div>
             </td>
@@ -311,6 +336,7 @@ export default {
 
   <!-- 建立產品pop -->
   <AddproductModal
+    ref="refAddproductModal"
     :addProduct="addProduct"
     :addCheckBool="addCheckBool"
   ></AddproductModal>
@@ -321,6 +347,9 @@ export default {
     :editCheckBool="editCheckBool"
     :productTmpData="productTmpData"
   ></EditproductModal>
+
+  <!-- 完成pop -->
+  <FinishPop ref="FinishPop"></FinishPop>
 </template>
 
 <style lang="scss" scoped>

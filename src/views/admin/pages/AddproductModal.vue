@@ -1,6 +1,11 @@
 <script>
 export default {
   props: ["addProduct", "addCheckBool"],
+  methods: {
+    formReset() {
+      this.$refs.refAddProduct.resetForm();
+    },
+  },
 };
 </script>
 
@@ -25,7 +30,7 @@ export default {
           ></button>
         </div>
         <div class="modal-body">
-          <VForm @submit="addProduct">
+          <VForm ref="refAddProduct" @submit="addProduct">
             <div class="d-flex align-items-center">
               <label
                 for="title"
