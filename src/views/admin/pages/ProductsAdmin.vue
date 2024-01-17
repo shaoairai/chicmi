@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import AddproductModal from "@/views/admin/pages/AddproductModal.vue";
 import EditproductModal from "@/views/admin/pages/EditproductModal.vue";
 import FinishPop from "@/components/popview/FinishPop.vue";
+import SureDelPop from "@/components/popview/SureDelPop.vue";
 import { Modal } from "bootstrap";
 
 export default {
@@ -41,6 +42,7 @@ export default {
     AddproductModal,
     EditproductModal,
     FinishPop,
+    SureDelPop,
   },
   methods: {
     takeToken() {
@@ -222,6 +224,13 @@ export default {
           console.log(err.response);
         });
     },
+    // 確定要刪除產品嗎
+    sureDelProduct(product) {
+      const vm = this;
+
+      // 彈出確認視窗
+      vm.$refs.refSureDelPop.popshow(product);
+    },
     // 刪除產品
     delProduct(product) {
       const vm = this;
@@ -240,9 +249,18 @@ export default {
       axios(conf)
         .then((res) => {
           console.log(res);
-          Swal.fire("刪除成功", "", "success");
-          // 重新取得
+
+          // 移除pop視窗
+          vm.$refs.refSureDelPop.pophide();
+
+          // 恢復按鈕
+          vm.$refs.refSureDelPop.delCheckBool = true;
+
+          // 重取資料
           vm.getProducts();
+
+          // 完成刪除pop
+          vm.$refs.FinishPop.popshow("del");
         })
         .catch((err) => {
           console.log(err.response);
@@ -324,7 +342,7 @@ export default {
               </div>
             </td>
             <td>
-              <div class="cursor-pointer" @click="delProduct(product)">
+              <div class="cursor-pointer" @click="sureDelProduct(product)">
                 <font-awesome-icon icon="fa-solid fa-trash-can" />
               </div>
             </td>
@@ -347,6 +365,9 @@ export default {
     :editCheckBool="editCheckBool"
     :productTmpData="productTmpData"
   ></EditproductModal>
+
+  <!-- 刪除產品pop -->
+  <SureDelPop ref="refSureDelPop" :delProduct="delProduct"></SureDelPop>
 
   <!-- 完成pop -->
   <FinishPop ref="FinishPop"></FinishPop>

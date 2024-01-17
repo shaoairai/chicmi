@@ -1,6 +1,5 @@
 <script>
 import { Modal } from "bootstrap";
-import { vModelCheckbox } from "vue";
 
 export default {
   data() {
