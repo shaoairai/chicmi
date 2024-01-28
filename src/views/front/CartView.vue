@@ -4,6 +4,8 @@ import { mapState, mapActions } from "pinia";
 import { cartStore } from "../../stores/counter";
 import { login } from "../../utils/token/getToken";
 
+import LoadingAni from "@/components/loading/LoadingAni.vue";
+
 export default {
   data() {
     return {
@@ -26,22 +28,31 @@ export default {
   },
   components: {
     RouterLink,
+    LoadingAni,
   },
   computed: {
     ...mapState(cartStore, ["productList", "deliveryFee", "calcTotal"]),
   },
   async mounted() {
-    let takenToken = this.takeToken();
-    this.token = takenToken;
+    const vm = this;
+
+    // Loading show
+    vm.$refs.refLoadingAni.show();
+
+    let takenToken = vm.takeToken();
+    vm.token = takenToken;
 
     // 沒 token 就踢出去
     if (!takenToken) {
       // 登入
       await login();
 
-      takenToken = this.takeToken();
-      this.token = takenToken;
+      takenToken = vm.takeToken();
+      vm.token = takenToken;
     }
+
+    // Loading hide
+    vm.$refs.refLoadingAni.hide();
   },
 };
 </script>
@@ -137,6 +148,9 @@ export default {
         </div>
       </div>
     </div>
+
+    <!-- Loading -->
+    <LoadingAni ref="refLoadingAni"></LoadingAni>
   </section>
 </template>
 

@@ -1,5 +1,6 @@
 <script>
-import banner from "/img/banner.jpg";
+import banner from "@/assets/img/brand_bg.jpg";
+// import banner from "/img/banner.jpg";
 import axios from "axios";
 import { mapActions, mapState } from "pinia";
 import { cartStore } from "../../stores/counter";
@@ -12,6 +13,7 @@ import NewsView from "@/components/homeview/NewsView.vue";
 import InfoView from "@/components/homeview/InfoView.vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import LoadingAni from "@/components/loading/LoadingAni.vue";
 
 export default {
   data() {
@@ -32,7 +34,7 @@ export default {
       return token;
     },
     // 取得產品列表
-    getProducts() {
+    async getProducts() {
       const vm = this;
       console.log("取得產品列表");
       const conf = {
@@ -45,7 +47,7 @@ export default {
           Authorization: `${this.token}`,
         },
       };
-      axios(conf)
+      await axios(conf)
         .then((res) => {
           console.log(res);
           // 存放所有產品
@@ -54,10 +56,10 @@ export default {
 
           // 取完資料，再執行 gsap 設定
           setTimeout(function () {
-            vm.gsapFeature();
+            // vm.gsapFeature();
             // 取好資料後再執行，避免因為產品還沒放而跑版
-            vm.$refs.newsRef.gsapSwiper();
-            vm.$refs.infoRef.gsapInfo();
+            // vm.$refs.newsRef.gsapSwiper();
+            // vm.$refs.infoRef.gsapInfo();
           }, 2000);
         })
         .catch((err) => {
@@ -82,33 +84,42 @@ export default {
     },
     // gsap
     gsapBanner(tl) {
-      tl.from(".banner-outer", {
-        y: 50,
-        duration: 1.5,
-        opacity: 0,
-        delay: 1,
-      });
-
-      tl.to(".gsap-banner-bg", {
-        opacity: 0,
-        y: "-10%",
-        scrollTrigger: {
-          trigger: ".gsap-banner-bg",
-          start: "80% 75%",
-          end: "80% top",
-          scrub: true,
-        },
-      });
-
-      tl.to(".banner-bg", {
-        width: "100%",
+      gsap.to(".banner-bg", {
+        yPercent: -30,
+        ease: "none",
         scrollTrigger: {
           trigger: ".banner-bg",
-          start: "80% 75%",
-          end: "80% top",
+          start: "top 40%",
+          end: "bottom top",
           scrub: true,
+          // markers: true,
         },
       });
+      // tl.from(".banner-outer", {
+      //   y: 50,
+      //   duration: 1.5,
+      //   opacity: 0,
+      //   delay: 1,
+      // });
+      // tl.to(".gsap-banner-bg", {
+      //   opacity: 0,
+      //   y: "-10%",
+      //   scrollTrigger: {
+      //     trigger: ".gsap-banner-bg",
+      //     start: "80% 75%",
+      //     end: "80% top",
+      //     scrub: true,
+      //   },
+      // });
+      // tl.to(".banner-bg", {
+      //   width: "100%",
+      //   scrollTrigger: {
+      //     trigger: ".banner-bg",
+      //     start: "80% 75%",
+      //     end: "80% top",
+      //     scrub: true,
+      //   },
+      // });
     },
     gsapFeature() {
       gsap.utils.toArray(".card").forEach((item, i) => {
@@ -139,10 +150,16 @@ export default {
     SloganView,
     NewsView,
     InfoView,
+    LoadingAni,
   },
   async mounted() {
-    let takenToken = this.takeToken();
-    this.token = takenToken;
+    const vm = this;
+
+    // Loading show
+    vm.$refs.refLoadingAni.show();
+
+    let takenToken = vm.takeToken();
+    vm.token = takenToken;
 
     // 沒 token 就踢出去
     if (!takenToken) {
@@ -151,17 +168,41 @@ export default {
       await login();
       // console.log("完成登入");
 
-      takenToken = this.takeToken();
-      this.token = takenToken;
+      takenToken = vm.takeToken();
+      vm.token = takenToken;
     }
 
-    this.getProducts();
+    // 取資料
+    await vm.getProducts();
 
     // gsap setting
     gsap.registerPlugin(ScrollTrigger);
     let tl = gsap.timeline({});
 
-    this.gsapBanner(tl);
+    vm.gsapBanner(tl);
+
+    // Loading hide
+    vm.$refs.refLoadingAni.hide();
+  },
+  beforeUnmount() {
+    // console.warn("全部銷毀");
+    // ScrollTrigger.killAll();
+    // const elementsToKill = [
+    //   "#div1_text",
+    //   "#img1",
+    //   "#div2_text",
+    //   "#img2",
+    //   "#div2_text2",
+    //   "#light2_2",
+    //   "#div3_text",
+    //   "#img3",
+    //   "#light1",
+    //   "#light2",
+    //   "#light3",
+    // ];
+    // elementsToKill.forEach((elementSelector) => {
+    //   gsap.killTweensOf(elementSelector);
+    // });
   },
 };
 </script>
@@ -171,19 +212,27 @@ export default {
     <!-- banner 背景 -->
     <section
       class="banner-outer position-relative"
-      style="height: calc(100vh - 130px)"
+      style="height: calc(100vh - 130px); overflow: hidden"
     >
+      <!-- <img
+        id="parallax-image"
+        class="w-100"
+        :src="imgUrl"
+        alt="Parallax Image"
+      /> -->
       <div class="gsap-banner-bg">
         <div
           class="banner-bg mx-auto"
-          style="width: calc(100% - 80px)"
+          style="filter: brightness(20%)"
           :style="{ backgroundImage: 'url(' + imgUrl + ')' }"
         ></div>
         <div class="banner position-absolute top-0 left-0 w-100">
-          <div class="banner-text w-100 d-flex align-items-center container">
-            <div class="text-white d-flex flex-column mb-5 ms-5">
-              <h2 class="fs-1 mb-4">Chic Mi Brunch</h2>
-              <h3 class="fs-4">The best of the day.</h3>
+          <div
+            class="banner-text w-100 d-flex align-items-center justify-content-center container"
+          >
+            <div class="text-white d-flex flex-column mb-5 ms-5 text-center">
+              <h2 class="mb-4 en" style="font-size: 58px">Tasty Excellence</h2>
+              <h3 class="fs-4 en">The Best Feasting Experience</h3>
             </div>
           </div>
         </div>
@@ -197,8 +246,10 @@ export default {
     <SloganView></SloganView>
     <!-- 精選熱銷 -->
     <section class="table-runner">
-      <div class="py-5 container">
-        <h3 class="feature text-start py-5 text-center">精選熱銷 | Top 3</h3>
+      <div class="pt-5 container" style="padding-bottom: 120px">
+        <h3 class="feature text-start py-5 text-center">
+          精選熱銷 | <span class="en">Top 3</span>
+        </h3>
         <div class="row row-cols-1 row-cols-lg-3 g-4">
           <template v-for="(item, key, index) in products" :key="item.id">
             <div class="col" v-if="index > 0 && index < 4">
@@ -253,6 +304,9 @@ export default {
     <!-- 營業資訊 -->
     <InfoView ref="infoRef"></InfoView>
   </div>
+
+  <!-- Loading -->
+  <LoadingAni ref="refLoadingAni"></LoadingAni>
 </template>
 
 <style lang="scss" scoped>
@@ -261,7 +315,7 @@ export default {
 }
 
 .banner-bg {
-  height: calc(100vh - 180px);
+  height: calc(100vh + 120px);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -283,7 +337,7 @@ export default {
   .banner,
   .banner-text,
   .banner-bg {
-    height: calc(100vh - 180px);
+    height: calc(100vh + 120px);
   }
 }
 </style>

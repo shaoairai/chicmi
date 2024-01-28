@@ -5,6 +5,8 @@ import { mapActions, mapState } from "pinia";
 import { cartStore } from "../../stores/counter";
 import { login } from "../../utils/token/getToken";
 
+import LoadingAni from "@/components/loading/LoadingAni.vue";
+
 export default {
   data() {
     return {
@@ -13,10 +15,17 @@ export default {
       categories: [],
       // 分類產品
       cateProducts: {},
+
+      mouseX: 0,
+      mouseY: 0,
+      elementCenterX: 0,
+      elementCenterY: 0,
+      showCircle: false, // 控制圓形顯示與否
     };
   },
   components: {
     RouterLink,
+    LoadingAni,
   },
   methods: {
     takeToken() {
@@ -29,7 +38,9 @@ export default {
       return token;
     },
     // 取得產品列表
-    getProducts() {
+    async getProducts() {
+      const vm = this;
+
       const conf = {
         method: "GET",
         url: `${import.meta.env.VITE_APP_URL}v2/api/${
@@ -40,7 +51,7 @@ export default {
           Authorization: `${this.token}`,
         },
       };
-      axios(conf)
+      await axios(conf)
         .then((res) => {
           console.log(res);
           // 存放所有產品
@@ -48,9 +59,9 @@ export default {
           saveData.saveProducts(res.data.products);
 
           // 篩選狀態為全部
-          this.cateProducts = res.data.products;
+          vm.cateProducts = res.data.products;
           // console.log(this.products);
-          this.getCategories();
+          vm.getCategories();
         })
         .catch((err) => {
           console.log(err.response);
@@ -99,24 +110,52 @@ export default {
       });
       return bool;
     },
+    // 加入購物車動畫
+    addAni(e) {
+      const vm = this;
+
+      // 獲取滑鼠位置
+      vm.mouseX = e.clientX;
+      vm.mouseY = e.clientY;
+
+      // 目標位置
+      const elementA = document.querySelector(".bi-cart-fill");
+      const elementRect = elementA.getBoundingClientRect();
+      vm.elementCenterX = elementRect.left + elementRect.width / 2;
+      vm.elementCenterY = elementRect.top + elementRect.height / 2;
+
+      // // 啟動動畫
+      // vm.showCircle = true;
+      // setTimeout(() => {
+      //   vm.showCircle = false;
+      // }, 1000);
+    },
   },
   computed: {
     ...mapState(cartStore, ["productList", "products"]),
   },
   async mounted() {
-    let takenToken = this.takeToken();
-    this.token = takenToken;
+    const vm = this;
+
+    // Loading show
+    vm.$refs.refLoadingAni.show();
+
+    let takenToken = vm.takeToken();
+    vm.token = takenToken;
 
     // 沒 token 就踢出去
     if (!takenToken) {
       // 登入
       await login();
 
-      takenToken = this.takeToken();
-      this.token = takenToken;
+      takenToken = vm.takeToken();
+      vm.token = takenToken;
     }
 
-    this.getProducts();
+    await vm.getProducts();
+
+    // Loading hide
+    vm.$refs.refLoadingAni.hide();
   },
 };
 </script>
@@ -182,7 +221,7 @@ export default {
                   <button
                     type="button"
                     class="btn btn-primary w-100 px-1"
-                    @click="addToCart(product)"
+                    @click="addToCart(product), addAni($event)"
                   >
                     加入購物車
                   </button>
@@ -193,6 +232,15 @@ export default {
         </div>
       </div>
     </div>
+
+    <!-- 加入購物車動畫 -->
+    <!-- <div
+      class="moving-circle"
+      :style="{ top: elementCenterY + 'px', left: elementCenterX + 'px' }"
+    ></div> -->
+
+    <!-- Loading -->
+    <LoadingAni ref="refLoadingAni"></LoadingAni>
   </section>
 </template>
 
@@ -201,5 +249,16 @@ export default {
 
 .section-line {
   border-bottom: 2px solid $primary;
+}
+
+/* 定義移動的圓形的樣式 */
+.moving-circle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: $primary; /* 選擇您想要的顏色 */
+  z-index: 99999;
+  transition: all 1s ease; /* 定義動畫效果，1秒內完成，使用ease函數 */
 }
 </style>

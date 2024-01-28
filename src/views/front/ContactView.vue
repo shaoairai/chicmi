@@ -1,5 +1,6 @@
 <script>
 import InfoView from "@/components/homeview/InfoView.vue";
+import LoadingAni from "@/components/loading/LoadingAni.vue";
 
 export default {
   data() {
@@ -11,6 +12,16 @@ export default {
   },
   components: {
     InfoView,
+    LoadingAni,
+  },
+  mounted() {
+    const vm = this;
+
+    // Loading show
+    vm.$refs.refLoadingAni.show();
+
+    // Loading hide
+    vm.$refs.refLoadingAni.hide();
   },
 };
 </script>
@@ -151,6 +162,9 @@ export default {
 
     <!-- 地點 -->
     <InfoView></InfoView>
+
+    <!-- Loading -->
+    <LoadingAni ref="refLoadingAni"></LoadingAni>
   </section>
 </template>
 

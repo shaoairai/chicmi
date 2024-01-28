@@ -35,7 +35,9 @@ export default {
     <div ref="infoAreaOuter" class="row g-0 flex-column flex-md-row">
       <div class="infoArea col">
         <div class="position-relative">
-          <div class="timeBg"></div>
+          <div style="overflow: hidden">
+            <div class="timeBg"></div>
+          </div>
           <div
             class="d-flex flex-column text-white position-absolute translate-middle top-50 start-50"
           >
@@ -63,7 +65,9 @@ export default {
       </div>
       <div class="infoArea col">
         <div class="position-relative">
-          <div class="orderBg"></div>
+          <div style="overflow: hidden">
+            <div class="orderBg"></div>
+          </div>
           <div
             class="d-flex flex-column text-white position-absolute translate-middle top-50 start-50"
           >
@@ -97,21 +101,26 @@ export default {
 </template>
 
 <style scoped>
-.timeBg {
+.timeBg,
+.orderBg {
   height: 480px;
-  background-image: url("@/assets/img/sloganbg.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  filter: brightness(0.2);
+  filter: brightness(0.25);
+  transition: all 0.25s ease-in-out;
+}
+.timeBg {
+  background-image: url("https://images.unsplash.com/photo-1578474846386-fed209b6ddad?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 }
 
 .orderBg {
-  height: 480px;
-  background-image: url("@/assets/img/brand_bg.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  filter: brightness(0.2);
+  background-image: url("https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.infoArea:hover .timeBg,
+.infoArea:hover .orderBg {
+  filter: brightness(0.15);
+  transform: scale(1.1); /* 放大 1.1 倍，可以根據需要調整比例 */
 }
 </style>

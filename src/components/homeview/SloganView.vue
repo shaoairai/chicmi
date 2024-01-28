@@ -14,7 +14,7 @@ export default {
           trigger: ".sloganArea",
           start: "top center",
           end: "top center",
-          toggleActions: "play none reverse none",
+          toggleActions: "restart none reverse none",
           // markers: true,
         },
       });
@@ -26,6 +26,14 @@ export default {
     let tl = gsap.timeline({});
     this.gsapStory(tl);
   },
+  beforeUnmount() {
+    // alert("kill");
+    ScrollTrigger.killAll();
+    const elementsToKill = [".sloganTxt"];
+    elementsToKill.forEach((elementSelector) => {
+      gsap.killTweensOf(elementSelector);
+    });
+  },
 };
 </script>
 
@@ -35,7 +43,7 @@ export default {
       <div class="sloganBg"></div>
       <div class="sloganTxt w-100 h-100 position-absolute top-0 start-0">
         <h3
-          class="position-absolute translate-middle top-50 start-50 text-white fs-2"
+          class="position-absolute translate-middle top-50 start-50 text-white text-center fs-2"
         >
           <span class="lh-base" style="white-space: nowrap">癡迷美食，</span>
           <span class="lh-base" style="white-space: nowrap"
@@ -50,7 +58,7 @@ export default {
 <style scoped>
 .sloganBg {
   height: 480px;
-  background-image: url("/src/assets/img/sloganbg.jpg");
+  background-image: url("https://images.unsplash.com/photo-1627947063935-55577ec3c2e1?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

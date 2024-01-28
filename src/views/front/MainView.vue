@@ -17,14 +17,21 @@ export default {
     ...mapState(cartStore, ["productList"]),
   },
   mounted() {
-    // 取得 localStorage 有無暫存列表
-    const storedCart = JSON.parse(localStorage.getItem("cart"));
-    if (storedCart != null) {
-      // 1. 宣告
-      const cartStoreFunc = cartStore();
-      // 2. 直接呼叫 pinia 函式，並帶參數
-      cartStoreFunc.setProductList(storedCart);
-    }
+    const vm = this;
+    this.$nextTick(async () => {
+      // 使用 Promise 解決 localStorage 異步操作
+      const storedCart = await new Promise((resolve) => {
+        const data = localStorage.getItem("cart");
+        resolve(JSON.parse(data));
+      });
+
+      if (storedCart != null) {
+        console.log("有存入");
+        console.log(storedCart);
+        const cartStoreFunc = cartStore();
+        cartStoreFunc.setProductList([...storedCart]);
+      }
+    });
   },
 };
 </script>
@@ -39,7 +46,7 @@ export default {
             class="navbar-brand text-primary fw-bold"
             style="font-size: 28px"
           >
-            吃迷 CHIC MI
+            吃迷 <span class="en">CHIC MI</span>
           </span>
         </RouterLink>
       </div>
@@ -57,8 +64,9 @@ export default {
           <RouterLink to="/cart" class="text-decoration-none"
             ><span class="text-white"
               ><i class="bi bi-cart-fill"></i>
-              <span>
+              <span class="ps-1">
                 {{ productList.length }}
+                <span class="d-none">{{ productList }}</span>
               </span>
             </span>
           </RouterLink>

@@ -3,6 +3,7 @@ import brandBg from "@/assets/img/brand_bg.jpg";
 import waiterBg from "@/assets/img/waiter.jpg";
 import glassBg from "@/assets/img/glassBg.jpg";
 import FeatureView from "@/components/aboutview/FeatureView.vue";
+import LoadingAni from "@/components/loading/LoadingAni.vue";
 
 export default {
   data() {
@@ -17,6 +18,16 @@ export default {
   },
   components: {
     FeatureView,
+    LoadingAni,
+  },
+  mounted() {
+    const vm = this;
+
+    // Loading show
+    vm.$refs.refLoadingAni.show();
+
+    // Loading hide
+    vm.$refs.refLoadingAni.hide();
   },
 };
 </script>
@@ -39,10 +50,15 @@ export default {
     <div class="container py-5">
       <div class="row d-flex align-items-center">
         <div class="col-12 col-md-6 pe-md-5 pe-0">
-          <h2 class="brLineAfter position-relative d-inline-block">品牌背景</h2>
+          <h2 class="brLineAfter pb-3 position-relative d-inline-block">
+            品牌背景
+          </h2>
           <div class="pt-3">
             <p>
-              吃迷早午餐店是一家融合了獨特創意與美味食材的早午餐餐廳。我們的品牌名稱"吃迷"象徵著我們對食物的熱情，以及希望讓每一位顧客都能在我們的餐廳中迷失於美味的味蕾之中。吃迷以新鮮、健康和創新的菜單聞名，為您提供一個獨特的用餐體驗。
+              「吃迷」寓意著對美食的執著與探索，每一位品味者都像是一位迷人的探險家，在這個美食的世界中尋找屬於自己的味覺寶藏。這個品牌背後的故事，正是一場尋味的冒險，一段濃縮了獨到眼光與品味的旅程。
+            </p>
+            <p>
+              「吃迷」誕生的初衷，是將飲食視為一場藝術，每一道菜都是大師們精心策劃的藝術品，呈現的不僅僅是美味，更是一場感官的盛宴。
             </p>
           </div>
         </div>
@@ -63,10 +79,15 @@ export default {
           </div>
         </div>
         <div class="col-12 col-md-6 ps-md-4 ps-0">
-          <h2 class="brLineAfter position-relative d-inline-block">用心服務</h2>
+          <h2 class="brLineAfter pb-3 position-relative d-inline-block">
+            用心服務
+          </h2>
           <div class="pt-3">
             <p>
-              吃迷不僅關注食物的品質，也關注顧客的需求。我們的團隊致力於提供親切、專業的服務，確保您在吃迷早午餐店中感受到家的溫暖。無論您是單獨前來用餐，還是和朋友家人一起來，我們都希望您享受到最美味的食物和最溫馨的用餐體驗。歡迎來到吃迷，一個讓您迷失於美食世界的地方！
+              無論是從餐點的製作到服務的呈現，我們都追求卓越，不妥協於任何細節。每一位顧客都是我們的貴賓，我們不僅提供美味的食物，更希望為您帶來一場感官的饗宴。
+            </p>
+            <p>
+              我們的廚師團隊由世界各地的烹飪大師組成，他們將不同的烹飪技藝融入每一道菜品，讓您品味到地道的異國風情。而我們的服務團隊則以熱忱和專業見稱，隨時為您提供細緻入微的服務，確保您在"吃迷"的用餐體驗是無比愉悅而難忘的。
             </p>
           </div>
         </div>
@@ -90,6 +111,9 @@ export default {
         >
       </div>
     </div>
+
+    <!-- Loading -->
+    <LoadingAni ref="refLoadingAni"></LoadingAni>
   </section>
 </template>
 

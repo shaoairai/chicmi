@@ -202,13 +202,96 @@ export default {
     gsap.registerPlugin(ScrollTrigger);
     let tl = gsap.timeline({});
 
-    this.gsapStory(tl);
+    // this.gsapStory(tl);
   },
+  // beforeUnmount() {
+  //   alert("kill");
+  //   ScrollTrigger.killAll();
+  //   const elementsToKill = [
+  //     "#div1_text",
+  //     "#img1",
+  //     "#div2_text",
+  //     "#img2",
+  //     "#div2_text2",
+  //     "#light2_2",
+  //     "#div3_text",
+  //     "#img3",
+  //     "#light1",
+  //     "#light2",
+  //     "#light3",
+  //   ];
+  //   elementsToKill.forEach((elementSelector) => {
+  //     gsap.killTweensOf(elementSelector);
+  //   });
+  // },
 };
 </script>
 
 <template>
   <section>
+    <div id="all" class="py-5 marble-bg">
+      <h3 class="pb-3 text-center">
+        我們的故事 | <span class="en">Our Story</span>
+      </h3>
+      <div class="d-flex flex-column flex-md-row align-items-center w-100">
+        <div class="w-md-50 w-100">
+          <div id="div1_text" class="mx-auto" style="width: 80%">
+            <h4 class="pb-3 mb-3 text-start position-relative brLineAfter">
+              奢華品味，美饌藝術
+            </h4>
+            <div>
+              <p>
+                我們的高級料理餐廳不僅讓您品味美食，更是一場視覺上的藝術饗宴。精心設計的用餐空間中，融合了現代與古典的藝術元素，每一處都彷彿是一幅畫，讓您在用餐的同時感受到美的震撼。這裡，美食與藝術完美結合，為您打造極致的視覺與味覺享受。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="w-md-50 w-100">
+          <div class="story-img story-img-1 my-5 mx-auto"></div>
+        </div>
+      </div>
+
+      <div
+        class="d-flex flex-column flex-md-row-reverse align-items-center w-100"
+      >
+        <div class="w-md-50 w-100">
+          <div id="div2_text" class="mx-auto" style="width: 80%">
+            <h4 class="pb-3 mb-3 text-start position-relative brLineAfter">
+              卓越服務，尊榮待客
+            </h4>
+            <div class="">
+              <p>
+                專業的服務團隊時刻以微笑迎接您的光臨。從您踏進餐廳那一刻開始，我們致力於提供無微不至的服務，使您感受到貴賓般的尊榮待遇。每一位顧客都是我們的至上重要，我們用心打造溫馨而獨特的用餐體驗，讓您在舒適的環境中盡情享受美好時光。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="w-md-50 w-100">
+          <div class="story-img story-img-2 my-5 mx-auto"></div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column flex-md-row align-items-center w-100">
+        <div class="w-md-50 w-100">
+          <div id="div3_text" class="mx-auto" style="width: 80%">
+            <h4 class="pb-3 mb-3 text-start position-relative brLineAfter">
+              完美環境，饗宴心靈
+            </h4>
+            <div>
+              <p>
+                我們的高級料理餐廳擁有令人陶醉的完美環境，華麗的燈光設計和舒適的座椅，以及悠揚的音樂，共同打造出一個迷人而寧靜的氛圍。這裡的環境不僅是一種視覺享受，更是一場心靈饗宴。無論是商務宴會、浪漫約會還是友情相聚，完美的環境都為您的用餐體驗增色不少，讓您的心靈在此獲得極致的寧靜與愉悅。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="w-md-50 w-100">
+          <div class="story-img story-img-3 my-5 mx-auto"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- gsap固定區的HTML -->
+  <!-- <section>
     <div id="all" class="py-5 marble-bg">
       <h3 class="pb-3 text-center">我們的故事 | Our Story</h3>
       <div class="d-flex w-100" style="height: calc(100vh - 320px)">
@@ -234,7 +317,6 @@ export default {
                   </p>
                 </div>
               </div>
-              <!-- 兩個動畫要進行時，需要裡面再包一層 -->
               <div
                 id="div2_text2"
                 class="position-absolute start-50"
@@ -269,24 +351,22 @@ export default {
             id="div2"
             class="display-block w-100 h-100 pt-5 position-relative"
           >
-            <div
-              class="position-absolute top-50 start-50 translate-middle w-100 h-100"
-            >
+            <div>
               <img
                 id="img1"
-                class="round-img position-absolute start-50 translate-middle"
+                class="round-img position-absolute top-0 left-0"
                 src="https://images.unsplash.com/photo-1697221119922-e33d364c2819?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
               />
               <img
                 id="img2"
-                class="round-img position-absolute start-50 translate-middle"
+                class="round-img position-absolute top-0 left-0"
                 src="https://images.unsplash.com/photo-1692881552436-02a5560f16e1?auto=format&fit=crop&q=80&w=1888&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
               />
               <img
                 id="img3"
-                class="round-img position-absolute start-50 translate-middle"
+                class="round-img position-absolute top-0 left-0"
                 src="https://images.unsplash.com/photo-1704071085149-2dd6f2e0a37a?q=80&w=1806&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
               />
@@ -295,7 +375,7 @@ export default {
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 </template>
 
 <style lang="scss" scoped>
@@ -308,11 +388,41 @@ export default {
   border: 1px solid $primary;
   transition: all 1s;
 }
+
+.story-img {
+  width: 80%;
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+}
+.story-img-1 {
+  background-image: url("https://images.unsplash.com/photo-1623594629187-2a68392cbab9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+.story-img-2 {
+  background-image: url("https://images.unsplash.com/photo-1621873495868-6c5774cf6012?q=80&w=1635&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+.story-img-3 {
+  background-image: url("https://images.unsplash.com/photo-1504718855392-c0f33b372e72?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
 .round-img {
-  top: calc(50% - 80px);
   width: 400px;
   height: 400px;
-  clip-path: circle(50% at 50% 50%);
   object-fit: cover;
+}
+
+.brLineAfter {
+  padding-bottom: 1.5rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    height: 2px;
+    background: $primary;
+    border-radius: 100px;
+  }
 }
 </style>
