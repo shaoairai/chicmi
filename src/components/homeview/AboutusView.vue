@@ -229,8 +229,13 @@ export default {
 
 <template>
   <section>
-    <div id="all" class="py-5 marble-bg">
-      <h3 class="pb-3 text-center">
+    <div id="all" class="py-5 marble-bg position-relative">
+      <img
+        class="bg-material position-absolute top-0 left-0 w-100 h-100"
+        src="https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="材質背景"
+      />
+      <h3 class="pb-3 pt-5 text-center">
         我們的故事 | <span class="en">Our Story</span>
       </h3>
       <div class="d-flex flex-column flex-md-row align-items-center w-100">
@@ -380,6 +385,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
+
+.bg-material {
+  z-index: -1;
+  object-fit: cover;
+  filter: brightness(50%);
+}
 
 .light {
   margin-bottom: 4px;

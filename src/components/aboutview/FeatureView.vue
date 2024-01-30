@@ -42,7 +42,7 @@ export default {
 
 <template>
   <section>
-    <div class="container py-5">
+    <div class="container pb-5" style="padding-top: 120px">
       <div class="row">
         <div class="col-12 text-center">
           <h2 class="brLineAfter position-relative d-inline-block">風格特色</h2>

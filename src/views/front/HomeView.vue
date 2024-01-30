@@ -245,57 +245,60 @@ export default {
     <!-- 過場 -->
     <SloganView></SloganView>
     <!-- 精選熱銷 -->
-    <section class="table-runner">
-      <div class="pt-5 container" style="padding-bottom: 120px">
-        <h3 class="feature text-start py-5 text-center">
-          精選熱銷 | <span class="en">Top 3</span>
-        </h3>
-        <div class="row row-cols-1 row-cols-lg-3 g-4">
-          <template v-for="(item, key, index) in products" :key="item.id">
-            <div class="col" v-if="index > 0 && index < 4">
-              <div class="card h-100 border-0" style="background: unset">
-                <img
-                  :src="item.imageUrl"
-                  class="rounded-3"
-                  alt="..."
-                  style="height: 300px; object-fit: cover"
-                />
-                <div class="d-flex justify-content-between pt-2 text-white">
-                  <h5>{{ item.title }}</h5>
-                  <div>NT${{ item.price }}</div>
-                </div>
-                <div class="row d-flex flex-column flex-md-row g-0">
-                  <div class="col col-md-6 pe-0 pe-md-1">
-                    <RouterLink :to="'/product/' + item.id">
-                      <button type="button" class="btn btn-primary w-100">
-                        查看內容
-                      </button>
-                    </RouterLink>
+    <section>
+      <div class="position-relative overflow-hidden">
+        <div class="table-runner"></div>
+        <div class="pt-5 container" style="padding-bottom: 120px">
+          <h3 class="feature text-start py-5 text-center">
+            精選熱銷 | <span class="en">Top 3</span>
+          </h3>
+          <div class="row row-cols-1 row-cols-lg-3 g-4">
+            <template v-for="(item, key, index) in products" :key="item.id">
+              <div class="col" v-if="index > 0 && index < 4">
+                <div class="card h-100 border-0" style="background: unset">
+                  <img
+                    :src="item.imageUrl"
+                    class="rounded-3"
+                    alt="..."
+                    style="height: 300px; object-fit: cover"
+                  />
+                  <div class="d-flex justify-content-between pt-2 text-white">
+                    <h5>{{ item.title }}</h5>
+                    <div>NT${{ item.price }}</div>
                   </div>
-                  <div class="col col-md-6 ps-0 ps-md-1 pt-1 pt-md-0">
-                    <template v-if="hasProduct(item.id)">
-                      <button
-                        type="button"
-                        class="btn btn-secondary w-100 px-1"
-                        disabled
-                      >
-                        已在購物車
-                      </button>
-                    </template>
-                    <template v-else>
-                      <button
-                        type="button"
-                        class="btn btn-primary w-100 px-1"
-                        @click="addToCart(item)"
-                      >
-                        加入購物車
-                      </button>
-                    </template>
+                  <div class="row d-flex flex-column flex-md-row g-0">
+                    <div class="col col-md-6 pe-0 pe-md-1">
+                      <RouterLink :to="'/product/' + item.id">
+                        <button type="button" class="btn btn-primary w-100">
+                          查看內容
+                        </button>
+                      </RouterLink>
+                    </div>
+                    <div class="col col-md-6 ps-0 ps-md-1 pt-1 pt-md-0">
+                      <template v-if="hasProduct(item.id)">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100 px-1"
+                          disabled
+                        >
+                          已在購物車
+                        </button>
+                      </template>
+                      <template v-else>
+                        <button
+                          type="button"
+                          class="btn btn-primary w-100 px-1"
+                          @click="addToCart(item)"
+                        >
+                          加入購物車
+                        </button>
+                      </template>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </div>
     </section>
@@ -326,12 +329,20 @@ export default {
   height: calc(100vh - 130px);
 }
 
-// .table-runner {
-//   background: url("/src/assets/img/table-runner.jpg");
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: cover;
-// }
+.table-runner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(https://images.unsplash.com/photo-1618022325802-7e5e732d97a1?q=80&w=1648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(8px);
+  z-index: -1;
+  // mix-blend-mode: screen;
+}
 
 @media screen and (max-width: 768px) {
   .banner,
