@@ -55,7 +55,7 @@ export default {
               start: "center 75%",
               end: "center 75%",
               toggleActions: "restart none reverse none",
-              markers: true,
+              // markers: true,
             },
           });
         });

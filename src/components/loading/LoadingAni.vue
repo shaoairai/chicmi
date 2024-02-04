@@ -20,7 +20,7 @@ export default {
           vm.isShow = false;
           vm.opacity = 1;
         }, 900);
-      }, 300);
+      }, 500);
     },
   },
 };

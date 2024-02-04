@@ -10,7 +10,7 @@ export default defineConfig({
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "true",
   },
   plugins: [vue()],
-  // base: "/brunch_web/",
+  // base: "/chicmi/", // 匯出到 github page 時使用
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),

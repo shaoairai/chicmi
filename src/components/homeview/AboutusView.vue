@@ -315,6 +315,8 @@ export default {
 .story-img {
   width: 80%;
   height: 50vh;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px 2px $gray-900;
   background-size: cover;
   background-position: center;
   object-fit: cover;
