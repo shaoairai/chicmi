@@ -15,6 +15,8 @@ export default {
       categories: [],
       // 分類產品
       cateProducts: {},
+      // 目前點選的分類
+      categoryName: "",
 
       mouseX: 0,
       mouseY: 0,
@@ -80,6 +82,8 @@ export default {
     getCateProducts(category) {
       console.log(category);
       if (category) {
+        // 目前點選的分類
+        this.categoryName = category;
         // 有要篩選
         const cateProducts = {};
         Object.keys(this.products).forEach((key) => {
@@ -90,6 +94,8 @@ export default {
         });
         this.cateProducts = cateProducts;
       } else {
+        // 目前點選的分類，"全部"以空值表示
+        this.categoryName = "";
         // 全部
         this.cateProducts = this.products;
       }
@@ -161,20 +167,25 @@ export default {
 </script>
 
 <template>
-  <section>
+  <section class="position-relative">
+    <div class="table-runner"></div>
     <!-- 分類 -->
     <div class="section-line container d-flex justify-content-center">
       <div class="pt-5 pb-3">
         <button
           type="button"
-          class="btn btn-primary m-2"
+          class="btn m-2"
+          :class="[categoryName === '' ? 'btn-primary' : 'btn-outline-primary']"
           @click="getCateProducts()"
         >
           全部
         </button>
         <button
           type="button"
-          class="btn btn-primary m-2"
+          class="btn m-2"
+          :class="[
+            categoryName === category ? 'btn-primary' : 'btn-outline-primary',
+          ]"
           v-for="(category, i) in categories"
           :key="i"
           @click="getCateProducts(category)"
@@ -246,6 +257,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
+
+.table-runner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(https://images.unsplash.com/photo-1618022325802-7e5e732d97a1?q=80&w=1648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(8px);
+  z-index: -1;
+}
 
 .section-line {
   border-bottom: 2px solid $primary;

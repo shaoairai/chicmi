@@ -2,7 +2,7 @@
 import banner from "@/assets/img/brand_bg.jpg";
 // import banner from "/img/banner.jpg";
 import axios from "axios";
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, storeToRefs } from "pinia";
 import { cartStore } from "../../stores/counter";
 import { RouterLink } from "vue-router";
 import { login } from "../../utils/token/getToken";
@@ -21,6 +21,10 @@ export default {
       token: "",
       text: "首頁",
       imgUrl: banner,
+
+      // pinia data
+      productList: [],
+      products: [],
     };
   },
   methods: {
@@ -53,14 +57,6 @@ export default {
           // 存放所有產品
           const saveData = cartStore();
           saveData.saveProducts(res.data.products);
-
-          // 取完資料，再執行 gsap 設定
-          setTimeout(function () {
-            // vm.gsapFeature();
-            // 取好資料後再執行，避免因為產品還沒放而跑版
-            // vm.$refs.newsRef.gsapSwiper();
-            // vm.$refs.infoRef.gsapInfo();
-          }, 2000);
         })
         .catch((err) => {
           console.log(err.response);
@@ -84,6 +80,7 @@ export default {
     },
     // gsap
     gsapBanner(tl) {
+      // 滾動視差
       gsap.to(".banner-bg", {
         yPercent: -30,
         ease: "none",
@@ -95,6 +92,23 @@ export default {
           // markers: true,
         },
       });
+
+      tl.from("#title", {
+        yPercent: 50,
+        delay: 1.2,
+        duration: 1,
+        opacity: 0,
+      });
+      tl.from(
+        "#subtitle",
+        {
+          yPercent: 50,
+          duration: 1,
+          opacity: 0,
+          delay: 0.5,
+        },
+        "<"
+      );
       // tl.from(".banner-outer", {
       //   y: 50,
       //   duration: 1.5,
@@ -122,27 +136,29 @@ export default {
       // });
     },
     gsapFeature() {
-      gsap.utils.toArray(".card").forEach((item, i) => {
-        gsap.from(item, {
-          y: 100,
-          duration: 1,
-          // ease: Power2.inOut,
-          delay: i * 0.3, // 這樣就能依順序
-          opacity: 0,
-          scrollTrigger: {
-            trigger: ".feature",
-            start: "center 65%",
-            end: "center 65%",
-            toggleActions: "restart none reverse none",
-            // markers: true,
-          },
+      this.$nextTick(() => {
+        gsap.utils.toArray(".card").forEach((item, i) => {
+          gsap.from(item, {
+            y: 100,
+            duration: 1,
+            // ease: Power2.inOut,
+            delay: i * 0.3, // 這樣就能依順序
+            opacity: 0,
+            scrollTrigger: {
+              trigger: ".feature",
+              start: "center 65%",
+              end: "center 65%",
+              toggleActions: "restart none reverse none",
+              // markers: true,
+            },
+          });
         });
       });
     },
   },
-  computed: {
-    ...mapState(cartStore, ["productList", "products"]),
-  },
+  // computed: {
+  //   ...mapState(cartStore, ["productList", "products"]),
+  // },
   components: {
     RouterLink,
     AboutusView,
@@ -175,34 +191,30 @@ export default {
     // 取資料
     await vm.getProducts();
 
+    // pinia 放入此頁面變數
+    const store = cartStore(); // 取得該 Store
+    const { products, productList } = storeToRefs(store); // 使用 storeToRefs(store)
+    // 存入該頁變數
+    vm.products = products;
+    vm.productList = productList;
+
     // gsap setting
     gsap.registerPlugin(ScrollTrigger);
     let tl = gsap.timeline({});
 
     vm.gsapBanner(tl);
+    vm.gsapFeature();
 
     // Loading hide
     vm.$refs.refLoadingAni.hide();
   },
   beforeUnmount() {
-    // console.warn("全部銷毀");
-    // ScrollTrigger.killAll();
-    // const elementsToKill = [
-    //   "#div1_text",
-    //   "#img1",
-    //   "#div2_text",
-    //   "#img2",
-    //   "#div2_text2",
-    //   "#light2_2",
-    //   "#div3_text",
-    //   "#img3",
-    //   "#light1",
-    //   "#light2",
-    //   "#light3",
-    // ];
-    // elementsToKill.forEach((elementSelector) => {
-    //   gsap.killTweensOf(elementSelector);
-    // });
+    console.warn("Home銷毀");
+    ScrollTrigger.killAll();
+    const elementsToKill = [".banner-bg", "#title", "#subtitle", ".card"];
+    elementsToKill.forEach((elementSelector) => {
+      gsap.killTweensOf(elementSelector);
+    });
   },
 };
 </script>
@@ -212,7 +224,7 @@ export default {
     <!-- banner 背景 -->
     <section
       class="banner-outer position-relative"
-      style="height: calc(100vh - 130px); overflow: hidden"
+      style="height: calc(100vh - 130px); margin-top: 130px; overflow: hidden"
     >
       <!-- <img
         id="parallax-image"
@@ -230,9 +242,17 @@ export default {
           <div
             class="banner-text w-100 d-flex align-items-center justify-content-center container"
           >
-            <div class="text-white d-flex flex-column mb-5 ms-5 text-center">
-              <h2 class="mb-4 en" style="font-size: 58px">Tasty Excellence</h2>
-              <h3 class="fs-4 en">The Best Feasting Experience</h3>
+            <div class="text-white d-flex flex-column mb-5 text-center">
+              <h2
+                id="title"
+                class="mb-4 en"
+                style="font-size: 58px; opacity: 1"
+              >
+                Tasty Excellence
+              </h2>
+              <h3 id="subtitle" class="fs-4 en" style="opacity: 1">
+                The Best Feasting Experience
+              </h3>
             </div>
           </div>
         </div>
@@ -341,12 +361,10 @@ export default {
   background-size: cover;
   filter: blur(8px);
   z-index: -1;
-  // mix-blend-mode: screen;
 }
 
 @media screen and (max-width: 768px) {
   .banner,
-  .banner-text,
   .banner-bg {
     height: calc(100vh + 120px);
   }

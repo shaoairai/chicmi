@@ -41,7 +41,10 @@ export default {
   <section>
     <div class="sloganArea position-relative">
       <div class="sloganBg"></div>
-      <div class="sloganTxt w-100 h-100 position-absolute top-0 start-0">
+      <div
+        class="sloganTxt w-100 h-100 position-absolute top-0 start-0"
+        style="opacity: 1"
+      >
         <h3
           class="position-absolute translate-middle top-50 start-50 text-white text-center fs-2"
         >

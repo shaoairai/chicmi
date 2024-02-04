@@ -25,6 +25,10 @@ export default {
     },
     // 該產品+1
     ...mapActions(cartStore, ["plusProduct", "minusProduct", "delProduct"]),
+    // 結帳
+    toCheckout() {
+      alert("Demo頁面，請勿結帳！");
+    },
   },
   components: {
     RouterLink,
@@ -144,7 +148,13 @@ export default {
       <div class="row">
         <div class="col text-end">
           <RouterLink to="/products">繼續逛逛</RouterLink>
-          <button type="button" class="btn btn-primary px-5 ms-4">結帳</button>
+          <button
+            type="button"
+            class="btn btn-primary px-5 ms-4"
+            @click="toCheckout"
+          >
+            結帳
+          </button>
         </div>
       </div>
     </div>

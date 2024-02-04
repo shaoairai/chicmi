@@ -1,5 +1,5 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView } from "vue-router";
 
 export default {
   data() {
@@ -29,10 +29,12 @@ export default {
             <h3>店面資訊</h3>
             <div class="d-flex flex-column text-white">
               <div class="pb-1">
-                <i class="bi bi-geo-alt-fill pe-2"></i>地址：970花蓮縣花蓮市三民街52號
+                <i class="bi bi-geo-alt-fill pe-2"></i
+                >地址：970花蓮縣花蓮市三民街52號
               </div>
               <div class="pb-1">
-                <i class="bi bi-calendar-week-fill pe-2"></i>營業時間：11:00~20:00(週一公休)
+                <i class="bi bi-calendar-week-fill pe-2"></i
+                >營業時間：11:00~20:00(週一公休)
               </div>
               <div class="pb-1">
                 <i class="bi bi-telephone-fill pe-2"></i>聯絡電話：(03)831-1131
@@ -46,10 +48,14 @@ export default {
                 <RouterLink to="about" class="footer-nav">品牌故事</RouterLink>
               </div>
               <div class="pb-1">
-                <RouterLink to="products" class="footer-nav">線上點餐</RouterLink>
+                <RouterLink to="products" class="footer-nav"
+                  >線上點餐</RouterLink
+                >
               </div>
               <div class="pb-1">
-                <RouterLink to="contact" class="footer-nav">聯絡我們</RouterLink>
+                <RouterLink to="contact" class="footer-nav"
+                  >聯絡我們</RouterLink
+                >
               </div>
             </div>
           </div>
@@ -67,7 +73,7 @@ export default {
 @import "@/assets/all.scss";
 
 .footer-column {
-  background: $gray-800;
+  background: $gray-700;
 }
 
 .footer-nav {

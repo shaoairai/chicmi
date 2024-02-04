@@ -117,4 +117,10 @@ const router = createRouter({
   ],
 });
 
+// 切頁面之後，卷軸都回到最頂端
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+  next();
+});
+
 export default router;

@@ -17,10 +17,10 @@ export default {
       setTimeout(function () {
         vm.opacity = 0;
         setTimeout(function () {
-          vm.opacity = 1;
           vm.isShow = false;
+          vm.opacity = 1;
         }, 900);
-      }, 600);
+      }, 300);
     },
   },
 };

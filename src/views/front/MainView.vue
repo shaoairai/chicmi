@@ -2,21 +2,32 @@
 import { RouterLink, RouterView } from "vue-router";
 import WebFooter from "@/components/WebFooter.vue";
 
-import { mapState } from "pinia";
+import { storeToRefs, mapState } from "pinia";
 import { cartStore } from "@/stores/counter.js";
 
 console.log(import.meta.env.VITE_APP_URL);
 
 export default {
+  data() {
+    return {
+      productList: [],
+    };
+  },
   components: {
     RouterLink,
     RouterView,
     WebFooter,
   },
   computed: {
-    ...mapState(cartStore, ["productList"]),
+    // ...mapState(cartStore, ["productList"]),
   },
   mounted() {
+    const store = cartStore();
+    const { productList } = storeToRefs(store);
+    console.log("productList");
+    console.log(productList);
+    this.productList = productList;
+
     const vm = this;
     this.$nextTick(async () => {
       // 使用 Promise 解決 localStorage 異步操作
@@ -66,7 +77,7 @@ export default {
               ><i class="bi bi-cart-fill"></i>
               <span class="ps-1">
                 {{ productList.length }}
-                <span class="d-none">{{ productList }}</span>
+                <!-- <span class="d-none">{{ productList }}</span> -->
               </span>
             </span>
           </RouterLink>

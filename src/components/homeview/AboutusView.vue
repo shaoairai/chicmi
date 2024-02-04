@@ -3,197 +3,108 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
+  data() {
+    return {
+      scrollTriggerSet1: {
+        trigger: "#div1_text",
+        start: "top 75%",
+        end: "top 75%",
+        // markers: true,
+      },
+
+      scrollTriggerSet2: {
+        trigger: "#div2_text",
+        start: "top 75%",
+        end: "top 75%",
+        // markers: true,
+      },
+
+      scrollTriggerSet3: {
+        trigger: "#div3_text",
+        start: "top 75%",
+        end: "top 75%",
+        // markers: true,
+      },
+    };
+  },
   methods: {
     // gsap setting
     gsapStory(tl) {
+      const vm = this;
       ScrollTrigger.defaults({
-        toggleActions: "play none reverse none",
+        toggleActions: "restart none reverse none",
       });
 
-      ScrollTrigger.create({
-        id: "#all",
-        trigger: "#all",
-        start: "top 130px",
-        // endTrigger: "#div1",
-        end: "+=2000",
-        pin: "#all",
-        pinSpacing: true,
-        // markers: true,
-      });
-
-      // 第1段文字，移出
-      gsap.to("#div1_text", {
+      gsap.from("#story-title1", {
+        y: "50px",
         opacity: 0,
+        ease: "power2.out",
         duration: 1,
-        y: -100,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "div1_text",
-          start: "center 30%",
-          end: "center 30%",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          // markers: true,
-        },
+        scrollTrigger: vm.scrollTriggerSet1,
       });
-
-      // 第1張圖片，移出
-      gsap.to("#img1", {
-        duration: 1,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "img1",
-          start: "center 30%",
-          end: "center 30%",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          // markers: true,
-          pinSpacing: true,
-        },
-      });
-
-      // 第1個圓點
-      gsap.to("#light1", {
-        scrollTrigger: {
-          id: "light1",
-          start: "center 30%",
-          end: "center 30%",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          onEnter: () =>
-            document.querySelector("#light1").classList.remove("bg-primary"), // 進入時執行的函式
-          onEnterBack: () =>
-            document.querySelector("#light1").classList.add("bg-primary"), // 上滾進入時執行的函式
-          // markers: true,
-        },
-      });
-
-      // 第2段文字，移入
-      gsap.from("#div2_text", {
+      gsap.from("#story-content1", {
+        y: "50px",
         opacity: 0,
+        ease: "power2.out",
         duration: 1,
-        y: 100,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "div1_text",
-          start: "center 30%",
-          end: "center 30%",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          // markers: true,
-        },
+        delay: 0.5,
+        scrollTrigger: vm.scrollTriggerSet1,
       });
-
-      // 第2張圖片，移入
-      gsap.from("#img2", {
+      gsap.from(".story-img-1", {
+        y: "50px",
         opacity: 0,
+        ease: "power2.out",
         duration: 1,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "img2",
-          start: "center 30%",
-          end: "center 30%",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          //markers: true,
-          pinSpacing: true,
-        },
+        delay: 1,
+        scrollTrigger: vm.scrollTriggerSet1,
       });
 
-      // 第2段文字，移出
-      gsap.to("#div2_text2", {
+      gsap.from("#story-title2", {
+        y: "50px",
         opacity: 0,
+        ease: "power2.out",
         duration: 1,
-        y: -100,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "div2_text2",
-          start: "center -500px",
-          end: "center -500px",
-          trigger: "#img2", // 指定元素
-          toggleActions: "play none reverse none",
-          // markers: true,
-        },
+        scrollTrigger: vm.scrollTriggerSet2,
       });
-
-      // 第2個圓點
-      gsap.from("#light2", {
-        scrollTrigger: {
-          id: "light2",
-          start: "center 30%",
-          end: "center 30%",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          onEnter: () =>
-            document.querySelector("#light2").classList.add("bg-primary"), // 進入時執行的函式
-          onEnterBack: () =>
-            document.querySelector("#light2").classList.remove("bg-primary"), // 上滾進入時執行的函式
-          // markers: true,
-        },
-      });
-
-      // 第2個圓點
-      gsap.to("#light2_2", {
-        scrollTrigger: {
-          id: "light2_2",
-          start: "center -500px",
-          end: "center -500px",
-          trigger: "#img1", // 指定元素
-          toggleActions: "play none reverse none",
-          onEnter: () =>
-            document.querySelector("#light2").classList.remove("bg-primary"), // 進入時執行的函式
-          onEnterBack: () =>
-            document.querySelector("#light2").classList.add("bg-primary"), // 上滾進入時執行的函式
-          // markers: true,
-        },
-      });
-
-      // 第3段文字，移入
-      gsap.from("#div3_text", {
+      gsap.from("#story-content2", {
+        y: "50px",
         opacity: 0,
+        ease: "power2.out",
         duration: 1,
-        y: 100,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "div1_text",
-          start: "center -500px",
-          end: "center -500px",
-          trigger: "#img2", // 指定元素
-          toggleActions: "play none reverse none",
-          // markers: true,
-        },
+        delay: 0.5,
+        scrollTrigger: vm.scrollTriggerSet2,
       });
-
-      // 第3張圖片，移入
-      gsap.from("#img3", {
+      gsap.from(".story-img-2", {
+        y: "50px",
         opacity: 0,
+        ease: "power2.out",
         duration: 1,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          id: "img3",
-          start: "center -500px",
-          end: "center -500px",
-          trigger: "#img2", // 指定元素
-          toggleActions: "play none reverse none",
-          //markers: true,
-          pinSpacing: true,
-        },
+        delay: 1,
+        scrollTrigger: vm.scrollTriggerSet2,
       });
 
-      // 第3個圓點
-      gsap.from("#light3", {
-        scrollTrigger: {
-          id: "light3",
-          start: "center -500px",
-          end: "center -500px",
-          trigger: "#img2", // 指定元素
-          toggleActions: "play none reverse none",
-          onEnter: () =>
-            document.querySelector("#light3").classList.add("bg-primary"), // 進入時執行的函式
-          onEnterBack: () =>
-            document.querySelector("#light3").classList.remove("bg-primary"), // 上滾進入時執行的函式
-          // markers: true,
-        },
+      gsap.from("#story-title3", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        scrollTrigger: vm.scrollTriggerSet3,
+      });
+      gsap.from("#story-content3", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: vm.scrollTriggerSet3,
+      });
+      gsap.from(".story-img-3", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        delay: 1,
+        scrollTrigger: vm.scrollTriggerSet3,
       });
     },
   },
@@ -202,28 +113,16 @@ export default {
     gsap.registerPlugin(ScrollTrigger);
     let tl = gsap.timeline({});
 
-    // this.gsapStory(tl);
+    this.gsapStory(tl);
   },
-  // beforeUnmount() {
-  //   alert("kill");
-  //   ScrollTrigger.killAll();
-  //   const elementsToKill = [
-  //     "#div1_text",
-  //     "#img1",
-  //     "#div2_text",
-  //     "#img2",
-  //     "#div2_text2",
-  //     "#light2_2",
-  //     "#div3_text",
-  //     "#img3",
-  //     "#light1",
-  //     "#light2",
-  //     "#light3",
-  //   ];
-  //   elementsToKill.forEach((elementSelector) => {
-  //     gsap.killTweensOf(elementSelector);
-  //   });
-  // },
+  beforeUnmount() {
+    // alert("kill");
+    ScrollTrigger.killAll();
+    const elementsToKill = ["#story-title1", "#story-content1", ".story-img-1"];
+    elementsToKill.forEach((elementSelector) => {
+      gsap.killTweensOf(elementSelector);
+    });
+  },
 };
 </script>
 
@@ -240,11 +139,15 @@ export default {
       </h3>
       <div class="d-flex flex-column flex-md-row align-items-center w-100">
         <div class="w-md-50 w-100">
-          <div id="div1_text" class="mx-auto" style="width: 80%">
-            <h4 class="pb-3 mb-3 text-start position-relative brLineAfter">
+          <div id="div1_text" class="mx-auto" style="width: 80%; opacity: 1">
+            <h4
+              id="story-title1"
+              class="pb-3 mb-3 text-start position-relative brLineAfter"
+              style="opacity: 1"
+            >
               奢華品味，美饌藝術
             </h4>
-            <div>
+            <div id="story-content1" style="opacity: 1">
               <p>
                 我們的高級料理餐廳不僅讓您品味美食，更是一場視覺上的藝術饗宴。精心設計的用餐空間中，融合了現代與古典的藝術元素，每一處都彷彿是一幅畫，讓您在用餐的同時感受到美的震撼。這裡，美食與藝術完美結合，為您打造極致的視覺與味覺享受。
               </p>
@@ -252,7 +155,10 @@ export default {
           </div>
         </div>
         <div class="w-md-50 w-100">
-          <div class="story-img story-img-1 my-5 mx-auto"></div>
+          <div
+            class="story-img story-img-1 my-5 mx-auto"
+            style="opacity: 1"
+          ></div>
         </div>
       </div>
 
@@ -261,10 +167,13 @@ export default {
       >
         <div class="w-md-50 w-100">
           <div id="div2_text" class="mx-auto" style="width: 80%">
-            <h4 class="pb-3 mb-3 text-start position-relative brLineAfter">
+            <h4
+              id="story-title2"
+              class="pb-3 mb-3 text-start position-relative brLineAfter"
+            >
               卓越服務，尊榮待客
             </h4>
-            <div class="">
+            <div id="story-content2" class="">
               <p>
                 專業的服務團隊時刻以微笑迎接您的光臨。從您踏進餐廳那一刻開始，我們致力於提供無微不至的服務，使您感受到貴賓般的尊榮待遇。每一位顧客都是我們的至上重要，我們用心打造溫馨而獨特的用餐體驗，讓您在舒適的環境中盡情享受美好時光。
               </p>
@@ -279,10 +188,13 @@ export default {
       <div class="d-flex flex-column flex-md-row align-items-center w-100">
         <div class="w-md-50 w-100">
           <div id="div3_text" class="mx-auto" style="width: 80%">
-            <h4 class="pb-3 mb-3 text-start position-relative brLineAfter">
+            <h4
+              id="story-title3"
+              class="pb-3 mb-3 text-start position-relative brLineAfter"
+            >
               完美環境，饗宴心靈
             </h4>
-            <div>
+            <div id="story-content3">
               <p>
                 我們的高級料理餐廳擁有令人陶醉的完美環境，華麗的燈光設計和舒適的座椅，以及悠揚的音樂，共同打造出一個迷人而寧靜的氛圍。這裡的環境不僅是一種視覺享受，更是一場心靈饗宴。無論是商務宴會、浪漫約會還是友情相聚，完美的環境都為您的用餐體驗增色不少，讓您的心靈在此獲得極致的寧靜與愉悅。
               </p>

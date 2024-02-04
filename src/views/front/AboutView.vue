@@ -4,6 +4,8 @@ import waiterBg from "@/assets/img/waiter.jpg";
 import glassBg from "@/assets/img/glassBg.jpg";
 import FeatureView from "@/components/aboutview/FeatureView.vue";
 import LoadingAni from "@/components/loading/LoadingAni.vue";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
   data() {
@@ -14,7 +16,77 @@ export default {
       glassBgUrl: glassBg,
       titleBg:
         "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+
+      scrollTriggerSet1: {
+        trigger: "#div1_text",
+        start: "top 75%",
+        end: "top 75%",
+        // markers: true,
+      },
+
+      scrollTriggerSet2: {
+        trigger: "#div2_text",
+        start: "top 75%",
+        end: "top 75%",
+        // markers: true,
+      },
     };
+  },
+  methods: {
+    gsapArea(tl) {
+      const vm = this;
+      ScrollTrigger.defaults({
+        toggleActions: "restart none reverse none",
+      });
+
+      gsap.from("#story-title1", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        scrollTrigger: vm.scrollTriggerSet1,
+      });
+      gsap.from("#story-content1", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: vm.scrollTriggerSet1,
+      });
+      gsap.from(".story-img-1", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        delay: 1,
+        scrollTrigger: vm.scrollTriggerSet1,
+      });
+
+      gsap.from("#story-title2", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        scrollTrigger: vm.scrollTriggerSet2,
+      });
+      gsap.from("#story-content2", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: vm.scrollTriggerSet2,
+      });
+      gsap.from(".story-img-2", {
+        y: "50px",
+        opacity: 0,
+        ease: "power2.out",
+        duration: 1,
+        delay: 1,
+        scrollTrigger: vm.scrollTriggerSet2,
+      });
+    },
   },
   components: {
     FeatureView,
@@ -26,8 +98,29 @@ export default {
     // Loading show
     vm.$refs.refLoadingAni.show();
 
+    // gsap setting
+    gsap.registerPlugin(ScrollTrigger);
+    let tl = gsap.timeline({});
+
+    vm.gsapArea(tl);
+
     // Loading hide
     vm.$refs.refLoadingAni.hide();
+  },
+  beforeUnmount() {
+    // alert("kill");
+    ScrollTrigger.killAll();
+    const elementsToKill = [
+      "#story-title1",
+      "#story-content1",
+      ".story-img-1",
+      "#story-title2",
+      "#story-content2",
+      ".story-img-2",
+    ];
+    elementsToKill.forEach((elementSelector) => {
+      gsap.killTweensOf(elementSelector);
+    });
   },
 };
 </script>
@@ -52,13 +145,16 @@ export default {
           品牌故事
         </div>
       </div>
-      <div class="container" style="padding: 120px 0 60px 0">
+      <div class="container" style="padding: 120px 20px 60px 20px">
         <div class="row d-flex align-items-center">
-          <div class="col-12 col-md-6 pe-md-5 pe-0">
-            <h2 class="brLineAfter pb-3 position-relative d-inline-block">
+          <div id="div1_text" class="col-12 col-md-6 pe-md-5 pe-0">
+            <h2
+              id="story-title1"
+              class="brLineAfter pb-3 position-relative d-inline-block"
+            >
               品牌背景
             </h2>
-            <div class="pt-3">
+            <div id="story-content1" class="pt-3">
               <p>
                 「吃迷」寓意著對美食的執著與探索，每一位品味者都像是一位迷人的探險家，在這個美食的世界中尋找屬於自己的味覺寶藏。這個品牌背後的故事，正是一場尋味的冒險，一段濃縮了獨到眼光與品味的旅程。
               </p>
@@ -68,26 +164,29 @@ export default {
             </div>
           </div>
           <div class="col-12 col-md-6 px-1">
-            <div class="rounded-3 overflow-hidden p-0 shadow-lg">
+            <div class="story-img-1 rounded-3 overflow-hidden p-0 shadow-lg">
               <img :src="brandImgUrl" alt="" class="w-100" />
             </div>
           </div>
         </div>
       </div>
-      <div class="container" style="padding: 60px 0 120px 0">
+      <div class="container" style="padding: 60px 20px 120px 20px">
         <div
           class="row d-flex align-items-center flex-md-row flex-column-reverse"
         >
           <div class="col-12 col-md-6 px-1">
-            <div class="rounded-3 overflow-hidden p-0 shadow-lg">
+            <div class="story-img-2 rounded-3 overflow-hidden p-0 shadow-lg">
               <img :src="waiterBgUrl" alt="" class="w-100" />
             </div>
           </div>
-          <div class="col-12 col-md-6 ps-md-4 ps-0">
-            <h2 class="brLineAfter pb-3 position-relative d-inline-block">
+          <div id="div2_text" class="col-12 col-md-6 ps-md-4 ps-0">
+            <h2
+              id="story-title2"
+              class="brLineAfter pb-3 position-relative d-inline-block"
+            >
               用心服務
             </h2>
-            <div class="pt-3">
+            <div id="story-content2" class="pt-3">
               <p>
                 無論是從餐點的製作到服務的呈現，我們都追求卓越，不妥協於任何細節。每一位顧客都是我們的貴賓，我們不僅提供美味的食物，更希望為您帶來一場感官的饗宴。
               </p>

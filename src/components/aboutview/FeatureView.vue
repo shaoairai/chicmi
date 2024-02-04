@@ -1,4 +1,7 @@
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 export default {
   data() {
     return {
@@ -37,6 +40,39 @@ export default {
       ],
     };
   },
+  methods: {
+    gsapFeature() {
+      this.$nextTick(() => {
+        gsap.utils.toArray(".feature-card-outer").forEach((item, i) => {
+          gsap.from(item, {
+            y: 100,
+            duration: 1,
+            // ease: Power2.inOut,
+            delay: i * 0.12, // 這樣就能依順序
+            opacity: 0,
+            scrollTrigger: {
+              trigger: "#feature-card-gsap-trigger",
+              start: "center 75%",
+              end: "center 75%",
+              toggleActions: "restart none reverse none",
+              markers: true,
+            },
+          });
+        });
+      });
+    },
+  },
+  mounted() {
+    this.gsapFeature();
+  },
+  beforeUnmount() {
+    // alert("kill");
+    ScrollTrigger.killAll();
+    const elementsToKill = [".feature-card-outer"];
+    elementsToKill.forEach((elementSelector) => {
+      gsap.killTweensOf(elementSelector);
+    });
+  },
 };
 </script>
 
@@ -46,7 +82,7 @@ export default {
       <div class="row">
         <div class="col-12 text-center">
           <h2 class="brLineAfter position-relative d-inline-block">風格特色</h2>
-          <div class="pt-3 d-flex flex-wrap">
+          <div id="feature-card-gsap-trigger" class="pt-3 d-flex flex-wrap">
             <div
               class="py-3 col-6 col-sm-4 col-md-2 feature-card-outer"
               v-for="item in features"
