@@ -6,18 +6,33 @@ export default {
   methods: {
     gsapStory(tl) {
       // 文字
-      gsap.from(".sloganTxt", {
-        opacity: 0,
-        y: 100,
-        duration: 1,
-        scrollTrigger: {
-          trigger: ".sloganArea",
-          start: "top center",
-          end: "top center",
-          toggleActions: "restart none reverse none",
-          // markers: true,
+      gsap.fromTo(
+        ".sloganTxt",
+        {
+          opacity: 0,
+          y: 100,
+          duration: 1,
+          scrollTrigger: {
+            trigger: ".sloganArea",
+            start: "top center",
+            end: "top center",
+            toggleActions: "restart none reverse none",
+            // markers: true,
+          },
         },
-      });
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: ".sloganArea",
+            start: "top center",
+            end: "top center",
+            toggleActions: "restart none reverse none",
+            // markers: true,
+          },
+        }
+      );
     },
   },
   mounted() {

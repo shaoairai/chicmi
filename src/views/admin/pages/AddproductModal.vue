@@ -128,6 +128,7 @@ export default {
                 id="description"
                 name="description"
                 type="text"
+                as="textarea"
                 rules="required"
                 placeholder="請輸入說明"
               />

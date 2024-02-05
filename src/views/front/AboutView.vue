@@ -39,53 +39,117 @@ export default {
         toggleActions: "restart none reverse none",
       });
 
-      gsap.from("#story-title1", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        scrollTrigger: vm.scrollTriggerSet1,
-      });
-      gsap.from("#story-content1", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: vm.scrollTriggerSet1,
-      });
-      gsap.from(".story-img-1", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 1,
-        scrollTrigger: vm.scrollTriggerSet1,
-      });
+      gsap.fromTo(
+        "#story-title1",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        }
+      );
+      gsap.fromTo(
+        "#story-content1",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet1,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet1,
+        }
+      );
+      gsap.fromTo(
+        ".story-img-1",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        }
+      );
 
-      gsap.from("#story-title2", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        scrollTrigger: vm.scrollTriggerSet2,
-      });
-      gsap.from("#story-content2", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: vm.scrollTriggerSet2,
-      });
-      gsap.from(".story-img-2", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 1,
-        scrollTrigger: vm.scrollTriggerSet2,
-      });
+      gsap.fromTo(
+        "#story-title2",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        }
+      );
+      gsap.fromTo(
+        "#story-content2",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet2,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet2,
+        }
+      );
+      gsap.fromTo(
+        ".story-img-2",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        }
+      );
     },
   },
   components: {
@@ -147,14 +211,19 @@ export default {
       </div>
       <div class="container" style="padding: 120px 20px 60px 20px">
         <div class="row d-flex align-items-center">
-          <div id="div1_text" class="col-12 col-md-6 pe-md-5 pe-0">
+          <div
+            id="div1_text"
+            class="col-12 col-md-6 pe-md-5 pe-0"
+            style="opacity: 1"
+          >
             <h2
               id="story-title1"
               class="brLineAfter pb-3 position-relative d-inline-block"
+              style="opacity: 1"
             >
               品牌背景
             </h2>
-            <div id="story-content1" class="pt-3">
+            <div id="story-content1" class="pt-3" style="opacity: 1">
               <p>
                 「吃迷」寓意著對美食的執著與探索，每一位品味者都像是一位迷人的探險家，在這個美食的世界中尋找屬於自己的味覺寶藏。這個品牌背後的故事，正是一場尋味的冒險，一段濃縮了獨到眼光與品味的旅程。
               </p>
@@ -164,7 +233,10 @@ export default {
             </div>
           </div>
           <div class="col-12 col-md-6 px-1">
-            <div class="story-img-1 rounded-3 overflow-hidden p-0 shadow-lg">
+            <div
+              class="story-img-1 rounded-3 overflow-hidden p-0 shadow-lg"
+              style="opacity: 1"
+            >
               <img :src="brandImgUrl" alt="" class="w-100" />
             </div>
           </div>
@@ -175,18 +247,26 @@ export default {
           class="row d-flex align-items-center flex-md-row flex-column-reverse"
         >
           <div class="col-12 col-md-6 px-1">
-            <div class="story-img-2 rounded-3 overflow-hidden p-0 shadow-lg">
+            <div
+              class="story-img-2 rounded-3 overflow-hidden p-0 shadow-lg"
+              style="opacity: 1"
+            >
               <img :src="waiterBgUrl" alt="" class="w-100" />
             </div>
           </div>
-          <div id="div2_text" class="col-12 col-md-6 ps-md-4 ps-0">
+          <div
+            id="div2_text"
+            class="col-12 col-md-6 ps-md-4 ps-0"
+            style="opacity: 1"
+          >
             <h2
               id="story-title2"
               class="brLineAfter pb-3 position-relative d-inline-block"
+              style="opacity: 1"
             >
               用心服務
             </h2>
-            <div id="story-content2" class="pt-3">
+            <div id="story-content2" class="pt-3" style="opacity: 1">
               <p>
                 無論是從餐點的製作到服務的呈現，我們都追求卓越，不妥協於任何細節。每一位顧客都是我們的貴賓，我們不僅提供美味的食物，更希望為您帶來一場感官的饗宴。
               </p>

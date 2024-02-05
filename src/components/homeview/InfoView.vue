@@ -11,19 +11,35 @@ export default {
     gsapInfo() {
       const vm = this;
       gsap.utils.toArray(".infoArea").forEach((item, i) => {
-        gsap.from(item, {
-          y: 100,
-          opacity: 0,
-          duration: 1.5,
-          delay: i * 0.35,
-          scrollTrigger: {
-            trigger: vm.$refs.infoAreaOuter,
-            start: "top 80%",
-            end: "top 80%",
-            toggleActions: "restart none reverse none",
-            // markers: true,
+        gsap.fromTo(
+          item,
+          {
+            y: 100,
+            opacity: 0,
+            duration: 1.5,
+            delay: i * 0.35,
+            scrollTrigger: {
+              trigger: vm.$refs.infoAreaOuter,
+              start: "top 80%",
+              end: "top 80%",
+              toggleActions: "restart none reverse none",
+              // markers: true,
+            },
           },
-        });
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            delay: i * 0.35,
+            scrollTrigger: {
+              trigger: vm.$refs.infoAreaOuter,
+              start: "top 80%",
+              end: "top 80%",
+              toggleActions: "restart none reverse none",
+              // markers: true,
+            },
+          }
+        );
       });
     },
   },
@@ -33,7 +49,7 @@ export default {
 <template>
   <section>
     <div ref="infoAreaOuter" class="row g-0 flex-column flex-md-row">
-      <div class="infoArea col">
+      <div class="infoArea col" style="opacity: 1">
         <div class="position-relative">
           <div style="overflow: hidden">
             <div class="timeBg"></div>
@@ -63,7 +79,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="infoArea col">
+      <div class="infoArea col" style="opacity: 1">
         <div class="position-relative">
           <div style="overflow: hidden">
             <div class="orderBg"></div>

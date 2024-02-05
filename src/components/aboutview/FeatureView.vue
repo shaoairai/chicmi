@@ -44,20 +44,37 @@ export default {
     gsapFeature() {
       this.$nextTick(() => {
         gsap.utils.toArray(".feature-card-outer").forEach((item, i) => {
-          gsap.from(item, {
-            y: 100,
-            duration: 1,
-            // ease: Power2.inOut,
-            delay: i * 0.12, // 這樣就能依順序
-            opacity: 0,
-            scrollTrigger: {
-              trigger: "#feature-card-gsap-trigger",
-              start: "center 75%",
-              end: "center 75%",
-              toggleActions: "restart none reverse none",
-              // markers: true,
+          gsap.fromTo(
+            item,
+            {
+              y: 100,
+              duration: 1,
+              // ease: Power2.inOut,
+              delay: i * 0.12, // 這樣就能依順序
+              opacity: 0,
+              scrollTrigger: {
+                trigger: "#feature-card-gsap-trigger",
+                start: "center 75%",
+                end: "center 75%",
+                toggleActions: "restart none reverse none",
+                // markers: true,
+              },
             },
-          });
+            {
+              y: 0,
+              duration: 1,
+              // ease: Power2.inOut,
+              delay: i * 0.12, // 這樣就能依順序
+              opacity: 1,
+              scrollTrigger: {
+                trigger: "#feature-card-gsap-trigger",
+                start: "center 75%",
+                end: "center 75%",
+                toggleActions: "restart none reverse none",
+                // markers: true,
+              },
+            }
+          );
         });
       });
     },

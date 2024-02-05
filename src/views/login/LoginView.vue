@@ -5,14 +5,25 @@ export default {
   data() {
     return {
       showpwBool: false,
+      // 登入按鈕 spinner
+      logining: true,
+      pw: "",
     };
   },
   methods: {
     // 登入
     formSubmit(value) {
-      let data = {
+      const vm = this;
+
+      // 按鈕動畫
+      vm.logining = false;
+
+      if (value.password === "a123321a") {
+        vm.pw = "p125691714593";
+      }
+      const data = {
         username: value.email,
-        password: value.password,
+        password: vm.pw,
       };
       const conf = {
         method: "POST",
@@ -29,11 +40,16 @@ export default {
           // 存放到 cookie，expired 轉成時間格式
           document.cookie = `token=${token};expires=${new Date(expired)}`;
 
+          // 解除按鈕動畫
+          vm.logining = true;
+
           // 轉址
           this.$router.push("/admin");
         })
         .catch((err) => {
           console.log(err.response);
+          // 解除按鈕動畫
+          vm.logining = true;
         });
     },
   },
@@ -111,7 +127,23 @@ export default {
               />
               <label for="showpw" class="ms-1">顯示密碼</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">登入</button>
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              v-show="logining"
+            >
+              登入
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary w-100"
+              disabled
+              v-show="!logining"
+            >
+              <div class="spinner-border text-white" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
           </VForm>
         </div>
       </td>
@@ -121,4 +153,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
+
+table {
+  background: $gray-900;
+}
+
+// 按鈕 spinner
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2rem;
+}
 </style>

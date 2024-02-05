@@ -286,4 +286,8 @@ export default {
   z-index: 99999;
   transition: all 1s ease; /* 定義動畫效果，1秒內完成，使用ease函數 */
 }
+
+.card {
+  background: unset;
+}
 </style>

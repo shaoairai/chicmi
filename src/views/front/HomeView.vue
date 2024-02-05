@@ -93,18 +93,33 @@ export default {
         },
       });
 
-      tl.from("#title", {
-        yPercent: 50,
-        delay: 1.2,
-        duration: 1,
-        opacity: 0,
-      });
-      tl.from(
+      tl.fromTo(
+        "#title",
+        {
+          yPercent: 50,
+          delay: 1.2,
+          duration: 1,
+          opacity: 0,
+        },
+        {
+          yPercent: 0,
+          delay: 1.2,
+          duration: 1,
+          opacity: 1,
+        }
+      );
+      tl.fromTo(
         "#subtitle",
         {
           yPercent: 50,
           duration: 1,
           opacity: 0,
+          delay: 0.5,
+        },
+        {
+          yPercent: 0,
+          duration: 1,
+          opacity: 1,
           delay: 0.5,
         },
         "<"
@@ -138,20 +153,37 @@ export default {
     gsapFeature() {
       this.$nextTick(() => {
         gsap.utils.toArray(".card").forEach((item, i) => {
-          gsap.from(item, {
-            y: 100,
-            duration: 1,
-            // ease: Power2.inOut,
-            delay: i * 0.3, // 這樣就能依順序
-            opacity: 0,
-            scrollTrigger: {
-              trigger: ".feature",
-              start: "center 65%",
-              end: "center 65%",
-              toggleActions: "restart none reverse none",
-              // markers: true,
+          gsap.fromTo(
+            item,
+            {
+              y: 100,
+              duration: 1,
+              // ease: Power2.inOut,
+              delay: i * 0.3, // 這樣就能依順序
+              opacity: 0,
+              scrollTrigger: {
+                trigger: ".feature",
+                start: "center 65%",
+                end: "center 65%",
+                toggleActions: "restart none reverse none",
+                // markers: true,
+              },
             },
-          });
+            {
+              y: 0,
+              duration: 1,
+              // ease: Power2.inOut,
+              delay: i * 0.3, // 這樣就能依順序
+              opacity: 1,
+              scrollTrigger: {
+                trigger: ".feature",
+                start: "center 65%",
+                end: "center 65%",
+                toggleActions: "restart none reverse none",
+                // markers: true,
+              },
+            }
+          );
         });
       });
     },
@@ -275,7 +307,10 @@ export default {
           <div class="row row-cols-1 row-cols-lg-3 g-4">
             <template v-for="(item, key, index) in products" :key="item.id">
               <div class="col" v-if="index > 0 && index < 4">
-                <div class="card h-100 border-0" style="background: unset">
+                <div
+                  class="card h-100 border-0"
+                  style="background: unset; opacity: 1"
+                >
                   <img
                     :src="item.imageUrl"
                     class="rounded-3"

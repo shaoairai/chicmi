@@ -324,7 +324,7 @@ export default {
             <td>{{ product.unit }}</td>
             <td>{{ product.category }}</td>
             <td>{{ product.content }}</td>
-            <td style="max-width: 120px; line-height: 1.75rem">
+            <td style="max-width: 200px; line-height: 1.75rem">
               {{ product.description }}
             </td>
             <td>NT$ {{ product.price }}</td>
@@ -375,6 +375,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
+
+section {
+  background: $gray-900;
+}
 
 td {
   text-align: center;

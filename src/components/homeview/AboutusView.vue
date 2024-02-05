@@ -35,77 +35,173 @@ export default {
         toggleActions: "restart none reverse none",
       });
 
-      gsap.from("#story-title1", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        scrollTrigger: vm.scrollTriggerSet1,
-      });
-      gsap.from("#story-content1", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: vm.scrollTriggerSet1,
-      });
-      gsap.from(".story-img-1", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 1,
-        scrollTrigger: vm.scrollTriggerSet1,
-      });
+      gsap.fromTo(
+        "#story-title1",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        }
+      );
+      gsap.fromTo(
+        "#story-content1",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet1,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet1,
+        }
+      );
+      gsap.fromTo(
+        ".story-img-1",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet1,
+        }
+      );
 
-      gsap.from("#story-title2", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        scrollTrigger: vm.scrollTriggerSet2,
-      });
-      gsap.from("#story-content2", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: vm.scrollTriggerSet2,
-      });
-      gsap.from(".story-img-2", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 1,
-        scrollTrigger: vm.scrollTriggerSet2,
-      });
+      gsap.fromTo(
+        "#story-title2",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        }
+      );
+      gsap.fromTo(
+        "#story-content2",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet2,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet2,
+        }
+      );
+      gsap.fromTo(
+        ".story-img-2",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet2,
+        }
+      );
 
-      gsap.from("#story-title3", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        scrollTrigger: vm.scrollTriggerSet3,
-      });
-      gsap.from("#story-content3", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: vm.scrollTriggerSet3,
-      });
-      gsap.from(".story-img-3", {
-        y: "50px",
-        opacity: 0,
-        ease: "power2.out",
-        duration: 1,
-        delay: 1,
-        scrollTrigger: vm.scrollTriggerSet3,
-      });
+      gsap.fromTo(
+        "#story-title3",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet3,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          scrollTrigger: vm.scrollTriggerSet3,
+        }
+      );
+      gsap.fromTo(
+        "#story-content3",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet3,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: vm.scrollTriggerSet3,
+        }
+      );
+      gsap.fromTo(
+        ".story-img-3",
+        {
+          y: "50px",
+          opacity: 0,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet3,
+        },
+        {
+          y: "0px",
+          opacity: 1,
+          ease: "power2.out",
+          duration: 1,
+          delay: 1,
+          scrollTrigger: vm.scrollTriggerSet3,
+        }
+      );
     },
   },
   mounted() {
@@ -166,14 +262,15 @@ export default {
         class="d-flex flex-column flex-md-row-reverse align-items-center w-100"
       >
         <div class="w-md-50 w-100">
-          <div id="div2_text" class="mx-auto" style="width: 80%">
+          <div id="div2_text" class="mx-auto" style="width: 80%; opacity: 1">
             <h4
               id="story-title2"
               class="pb-3 mb-3 text-start position-relative brLineAfter"
+              style="opacity: 1"
             >
               卓越服務，尊榮待客
             </h4>
-            <div id="story-content2" class="">
+            <div id="story-content2" style="opacity: 1">
               <p>
                 專業的服務團隊時刻以微笑迎接您的光臨。從您踏進餐廳那一刻開始，我們致力於提供無微不至的服務，使您感受到貴賓般的尊榮待遇。每一位顧客都是我們的至上重要，我們用心打造溫馨而獨特的用餐體驗，讓您在舒適的環境中盡情享受美好時光。
               </p>
@@ -181,20 +278,24 @@ export default {
           </div>
         </div>
         <div class="w-md-50 w-100">
-          <div class="story-img story-img-2 my-5 mx-auto"></div>
+          <div
+            class="story-img story-img-2 my-5 mx-auto"
+            style="opacity: 1"
+          ></div>
         </div>
       </div>
 
       <div class="d-flex flex-column flex-md-row align-items-center w-100">
         <div class="w-md-50 w-100">
-          <div id="div3_text" class="mx-auto" style="width: 80%">
+          <div id="div3_text" class="mx-auto" style="width: 80%; opacity: 1">
             <h4
               id="story-title3"
               class="pb-3 mb-3 text-start position-relative brLineAfter"
+              style="opacity: 1"
             >
               完美環境，饗宴心靈
             </h4>
-            <div id="story-content3">
+            <div id="story-content3" style="opacity: 1">
               <p>
                 我們的高級料理餐廳擁有令人陶醉的完美環境，華麗的燈光設計和舒適的座椅，以及悠揚的音樂，共同打造出一個迷人而寧靜的氛圍。這裡的環境不僅是一種視覺享受，更是一場心靈饗宴。無論是商務宴會、浪漫約會還是友情相聚，完美的環境都為您的用餐體驗增色不少，讓您的心靈在此獲得極致的寧靜與愉悅。
               </p>
@@ -202,7 +303,10 @@ export default {
           </div>
         </div>
         <div class="w-md-50 w-100">
-          <div class="story-img story-img-3 my-5 mx-auto"></div>
+          <div
+            class="story-img story-img-3 my-5 mx-auto"
+            style="opacity: 1"
+          ></div>
         </div>
       </div>
     </div>

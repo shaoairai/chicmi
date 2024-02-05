@@ -21,18 +21,33 @@ export default {
   },
   methods: {
     gsapSwiper() {
-      gsap.from(".mySwiperOuter", {
-        y: 100,
-        opacity: 0,
-        duration: 1.5,
-        scrollTrigger: {
-          trigger: ".mySwiperOuter",
-          start: "top 80%",
-          end: "top 80%",
-          toggleActions: "play none reverse none",
-          // markers: true,
+      gsap.fromTo(
+        ".mySwiperOuter",
+        {
+          y: 100,
+          opacity: 0,
+          duration: 1.5,
+          scrollTrigger: {
+            trigger: ".mySwiperOuter",
+            start: "top 80%",
+            end: "top 80%",
+            toggleActions: "play none reverse none",
+            // markers: true,
+          },
         },
-      });
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          scrollTrigger: {
+            trigger: ".mySwiperOuter",
+            start: "top 80%",
+            end: "top 80%",
+            toggleActions: "play none reverse none",
+            // markers: true,
+          },
+        }
+      );
     },
   },
 };
@@ -50,7 +65,7 @@ export default {
         <h3 class="text-start py-5 text-center">
           最新消息 | <span class="en">Upcoming Events</span>
         </h3>
-        <div class="mySwiperOuter">
+        <div class="mySwiperOuter" style="opacity: 1">
           <swiper
             :grabCursor="true"
             :loop="true"
