@@ -62,10 +62,10 @@ export default {
 </script>
 
 <template>
-  <section>
+  <section style="min-height: calc(100vh - 330px)">
     <!-- 無資料 -->
     <div class="py-5 container" v-if="productList.length <= 0">
-      <div class="fs-2">購物車無資料</div>
+      <div class="fs-2 pb-3">購物車無資料</div>
       <RouterLink to="/products" class="btn btn-primary">繼續逛逛</RouterLink>
     </div>
     <!-- 菜單 -->
