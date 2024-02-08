@@ -1,12 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import MainView from "../views/front/MainView.vue";
-import HomeView from "../views/front/HomeView.vue";
+import MainView from "../views/front/mainview/MainView.vue";
+import HomeView from "../views/front/homeview/HomeView.vue";
 import LoginView from "../views/login/LoginView.vue";
-import AboutView from "../views/front/AboutView.vue";
-import ProductsView from "../views/front/ProductsView.vue";
-import ProductView from "../views/front/ProductView.vue";
-import CartView from "../views/front/CartView.vue";
-import ContactView from "../views/front/ContactView.vue";
+import AboutView from "../views/front/aboutview/AboutView.vue";
+import ProductsView from "../views/front/productsview/ProductsView.vue";
+import ProductView from "../views/front/productview/ProductView.vue";
+import CartView from "../views/front/cartview/CartView.vue";
+import ContactView from "../views/front/contactview/ContactView.vue";
 import AdminView from "../views/admin/AdminView.vue";
 import ProductsAdmin from "../views/admin/pages/ProductsAdmin.vue";
 

@@ -42,11 +42,6 @@ export default {
           </div>
         </div>
       </div>
-      <!-- <div
-        class="position-absolute translate-middle start-50 top-50 text-center en fs-3 text-primary"
-      >
-        CHIC MI
-      </div> -->
     </div>
   </section>
 </template>

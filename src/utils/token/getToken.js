@@ -4,21 +4,23 @@
 
 *****************/
 
+import { faL } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 // 登入
 export async function login() {
-    const data = {
-      "username": import.meta.env.VITE_APP_ACCOUNT,
-      "password": import.meta.env.VITE_APP_PW,
-    }
-    const conf = {
-      method: 'POST',
-      url: `${import.meta.env.VITE_APP_URL}v2/admin/signin`,
-      data: data,
-    }
-    await axios(conf).then((res) => {
-      console.log(res);
+  const data = {
+    username: import.meta.env.VITE_APP_ACCOUNT,
+    password: import.meta.env.VITE_APP_PW,
+  };
+  const conf = {
+    method: "POST",
+    url: `${import.meta.env.VITE_APP_URL}v2/admin/signin`,
+    data: data,
+  };
+  await axios(conf)
+    .then((res) => {
+      // console.log(res);
 
       // 取出 token 和 expired
       const { token, expired } = res.data;
@@ -26,14 +28,20 @@ export async function login() {
       // 存放到 cookie，expired 轉成時間格式
       document.cookie = `token=${token};expires=${new Date(expired)}`;
 
-    }).catch((err) => {
-      console.log(err.response);
+      axios.defaults.headers.common["Authorization"] = token;
     })
-  }
+    .catch((err) => {
+      console.log(err.response);
+    });
+}
 
 // 取出 token
 export function getTokenFromCookie() {
-    const tokenCookie = document.cookie.split(';').map(cookie => cookie.trim()).find(cookie => cookie.startsWith('token='));
-    const token = tokenCookie ? tokenCookie.split('=')[1] : null;
-    return token;
+  const tokenCookie = document.cookie
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .find((cookie) => cookie.startsWith("token="));
+  const token = tokenCookie ? tokenCookie.split("=")[1] : null;
+  axios.defaults.headers.common["Authorization"] = token;
+  return token ? true : false;
 }

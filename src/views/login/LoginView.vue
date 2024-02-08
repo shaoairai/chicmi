@@ -8,6 +8,9 @@ export default {
       // 登入按鈕 spinner
       logining: true,
       pw: "",
+
+      // 登入錯誤
+      inputErr: false,
     };
   },
   methods: {
@@ -15,12 +18,16 @@ export default {
     formSubmit(value) {
       const vm = this;
 
+      // 恢復無錯誤
+      vm.inputErr = false;
+
       // 按鈕動畫
       vm.logining = false;
 
-      if (value.password === "a123321a") {
-        vm.pw = "p125691714593";
+      if (value.password === import.meta.env.VITE_APP_GUESTPW) {
+        vm.pw = import.meta.env.VITE_APP_PW;
       }
+
       const data = {
         username: value.email,
         password: vm.pw,
@@ -32,13 +39,14 @@ export default {
       };
       axios(conf)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
 
           // 取出 token 和 expired
           const { token, expired } = res.data;
 
           // 存放到 cookie，expired 轉成時間格式
           document.cookie = `token=${token};expires=${new Date(expired)}`;
+          axios.defaults.headers.common["Authorization"] = token;
 
           // 解除按鈕動畫
           vm.logining = true;
@@ -48,6 +56,8 @@ export default {
         })
         .catch((err) => {
           console.log(err.response);
+          alert("帳號或密碼錯誤！");
+          vm.inputErr = true;
           // 解除按鈕動畫
           vm.logining = true;
         });
@@ -66,6 +76,9 @@ export default {
         <div class="container" style="max-width: 500px">
           <h4 class="w-100 text-center pb-3">登入</h4>
           <VForm @submit="formSubmit">
+            <div class="error text-danger text-end pb-2" v-if="inputErr">
+              帳號或密碼錯誤
+            </div>
             <div class="d-flex align-items-center">
               <i class="icon-user text-primary fs-4"></i>
               <label

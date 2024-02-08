@@ -1,8 +1,8 @@
 <script>
 import { RouterLink } from "vue-router";
 import { mapState, mapActions } from "pinia";
-import { cartStore } from "../../stores/counter";
-import { login } from "../../utils/token/getToken";
+import { cartStore } from "@/stores/counter";
+import { login } from "@/utils/token/getToken";
 
 import LoadingAni from "@/components/loading/LoadingAni.vue";
 
@@ -71,10 +71,10 @@ export default {
     <!-- 菜單 -->
     <div class="py-5 container" v-if="productList.length > 0">
       <!-- 名稱  -->
-      <div class="row p-3">
+      <div class="row p-3 d-none d-md-flex">
         <div class="col d-flex justify-content-center">商品圖</div>
         <div class="col d-flex justify-content-center">品名</div>
-        <div class="col d-flex justify-content-center">價格</div>
+        <div class="col d-flex justify-content-center">單價</div>
         <div class="col d-flex justify-content-center">數量</div>
         <div class="col d-flex justify-content-center">小計</div>
         <div class="col d-flex justify-content-center">移除</div>
@@ -84,7 +84,9 @@ export default {
           <div class="products-list-area px-3 rounded-3">
             <template v-for="(item, index) in productList" :key="item.id">
               <!-- 單一品項 -->
-              <div class="row align-items-center py-3">
+              <div
+                class="row align-items-center py-3 d-flex flex-column flex-md-row"
+              >
                 <div class="col w-100 overflow-hidden">
                   <div class="position-relative" style="padding-top: 100%">
                     <img
@@ -95,15 +97,16 @@ export default {
                     />
                   </div>
                 </div>
-                <div class="col d-flex justify-content-center">
-                  {{ item.name }}
+                <div class="col d-flex justify-content-md-center py-2">
+                  <span class="d-md-none">品名：</span>{{ item.name }}
                 </div>
-                <div class="col d-flex justify-content-center">
-                  NT$ {{ item.price }}
+                <div class="col d-flex justify-content-md-center py-2">
+                  <span class="d-md-none">單價：</span>NT$ {{ item.price }}
                 </div>
                 <div
-                  class="col d-flex justify-content-center align-items-center"
+                  class="col d-flex justify-content-md-center py-2 align-items-center"
                 >
+                  <span class="d-md-none">數量：</span>
                   <div @click="minusProduct(item)" class="cursor-pointer">
                     <i class="bi bi-dash-circle-fill text-primary fs-4"></i>
                   </div>
@@ -117,14 +120,15 @@ export default {
                     <i class="bi bi-plus-circle-fill text-primary fs-4"></i>
                   </div>
                 </div>
-                <div class="col d-flex justify-content-center">
-                  NT$ {{ item.price * item.number }}
+                <div class="col d-flex justify-content-md-center py-2">
+                  <span class="d-md-none">小計：</span>NT$
+                  {{ item.price * item.number }}
                 </div>
                 <div
-                  class="col d-flex justify-content-center cursor-pointer"
+                  class="col d-flex justify-content-md-center cursor-pointer"
                   @click="delProduct(item)"
                 >
-                  X
+                  <span class="btn btn-danger my-2">移除</span>
                 </div>
               </div>
               <div

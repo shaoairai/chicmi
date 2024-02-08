@@ -62,7 +62,11 @@ export default {
   <section>
     <div class="container p-5">
       <div class="row">
-        <div class="col text-center" v-for="(item, i) in numberList" :key="i">
+        <div
+          class="col-6 col-md-3 text-center py-3"
+          v-for="(item, i) in numberList"
+          :key="i"
+        >
           <div class="fs-1 numberArea en">{{ item["number"] }}+</div>
           <div class="fs-4">{{ item["text"] }}</div>
         </div>

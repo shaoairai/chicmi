@@ -2,9 +2,8 @@
 import { RouterLink, RouterView } from "vue-router";
 import axios from "axios";
 import { mapActions, mapState } from "pinia";
-import { cartStore } from "../../../stores/counter";
-import { login } from "../../../utils/token/getToken";
-import Swal from "sweetalert2";
+import { cartStore } from "@/stores/counter";
+import { login, getTokenFromCookie } from "@/utils/token/getToken";
 
 import AddproductModal from "@/views/admin/pages/AddproductModal.vue";
 import EditproductModal from "@/views/admin/pages/EditproductModal.vue";
@@ -45,15 +44,6 @@ export default {
     SureDelPop,
   },
   methods: {
-    takeToken() {
-      // 從 cookie 取出 token
-      const tokenCookie = document.cookie
-        .split(";")
-        .map((cookie) => cookie.trim())
-        .find((cookie) => cookie.startsWith("token="));
-      const token = tokenCookie ? tokenCookie.split("=")[1] : null;
-      return token;
-    },
     getProducts() {
       const conf = {
         method: "GET",
@@ -62,7 +52,6 @@ export default {
         }/admin/products/all`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
       };
       axios(conf)
@@ -97,12 +86,12 @@ export default {
     },
     // 新增產品
     addProduct(value) {
-      console.log(value);
+      // console.log(value);
       const vm = this;
       // 按鈕不可按
       vm.addCheckBool = false;
 
-      console.log("新增產品");
+      // console.log("新增產品");
 
       const data = {
         data: {
@@ -126,14 +115,13 @@ export default {
         }/admin/product`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
         data: data,
       };
       axios(conf)
         .then((res) => {
-          console.log("建立成功");
-          console.log(res);
+          // console.log("建立成功");
+          // console.log(res);
 
           // 恢復按鈕
           vm.addCheckBool = true;
@@ -157,8 +145,8 @@ export default {
     // 修改產品
     editProduct(product) {
       const vm = this;
-      console.log("修改產品");
-      console.log(product);
+      // console.log("修改產品");
+      // console.log(product);
 
       vm.editProductPopModal = new Modal("#editProductModal");
       vm.editProductPopModal.show();
@@ -166,16 +154,16 @@ export default {
       // 目前內容存入
       const productTmp = JSON.parse(JSON.stringify(product));
       vm.productTmpData = productTmp;
-      console.log(vm.productTmpData);
+      // console.log(vm.productTmpData);
     },
     // 完成修改產品
     confirmeditProduct(value) {
-      console.log(value);
+      // console.log(value);
       const vm = this;
       // 按鈕不可按
       vm.editCheckBool = false;
 
-      console.log("完成修改產品");
+      // console.log("完成修改產品");
 
       const data = {
         data: {
@@ -199,14 +187,13 @@ export default {
         }/admin/product/${vm.productTmpData.id}`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
         data: data,
       };
       axios(conf)
         .then((res) => {
-          console.log("修改成功");
-          console.log(res);
+          // console.log("修改成功");
+          // console.log(res);
 
           // 移除pop視窗
           vm.editProductPopModal.hide();
@@ -243,12 +230,11 @@ export default {
         }/admin/product/${product.id}`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
       };
       axios(conf)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
 
           // 移除pop視窗
           vm.$refs.refSureDelPop.pophide();
@@ -268,15 +254,9 @@ export default {
     },
   },
   async mounted() {
-    let takenToken = this.takeToken();
-    this.token = takenToken;
-    // 沒 token 就踢出去
+    const takenToken = getTokenFromCookie();
     if (!takenToken) {
-      // 登入
       await login();
-
-      takenToken = this.takeToken();
-      this.token = takenToken;
     }
 
     this.getProducts();
@@ -306,44 +286,103 @@ export default {
       </div>
       <table class="w-100">
         <thead>
-          <tr>
+          <tr class="d-none d-lg-table-row">
             <td>產品名稱</td>
             <td>單位</td>
             <td>分類</td>
             <td>內含物</td>
             <td>說明</td>
-            <td>價格</td>
+            <td>價格(NT$)</td>
             <td>圖片</td>
             <td>修改</td>
             <td>刪除</td>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, i) in products" :key="i">
-            <td>{{ product.title }}</td>
-            <td>{{ product.unit }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.content }}</td>
-            <td style="max-width: 200px; line-height: 1.75rem">
-              {{ product.description }}
+          <tr
+            v-for="(product, i) in products"
+            :key="i"
+            class="d-flex flex-column d-lg-table-row"
+            style="line-height: 1.75rem"
+          >
+            <td class="text-start text-lg-center" style="order: 2">
+              <span class="d-lg-none">產品名稱：</span>{{ product.title }}
             </td>
-            <td>NT$ {{ product.price }}</td>
-            <td>
+            <td class="text-start text-lg-center" style="order: 3">
+              <span class="d-lg-none">單位：</span>{{ product.unit }}
+            </td>
+            <td class="text-start text-lg-center" style="order: 4">
+              <span class="d-lg-none">分類：</span>{{ product.category }}
+            </td>
+            <td class="text-start text-lg-center" style="order: 5">
+              <span class="d-lg-none">內含物：</span>{{ product.content }}
+            </td>
+            <td class="describe text-start text-lg-center" style="order: 6">
+              <span class="d-lg-none">說明：</span>{{ product.description }}
+            </td>
+            <td class="text-start text-lg-center" style="order: 7">
+              <span class="d-lg-none">價格：NT$ </span>{{ product.price }}
+            </td>
+            <td class="text-start text-lg-center" style="order: 1">
               <img
                 :src="product.imageUrl"
-                class="rounded-3"
+                class="product-img rounded-3"
                 :alt="product.title"
-                style="width: 100px; object-fit: cover"
+                style="object-fit: cover"
               />
             </td>
-            <td>
-              <div class="cursor-pointer" @click="editProduct(product)">
-                <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+            <div class="d-lg-none" style="order: 8">
+              <td class="text-start text-lg-center" style="order: 8">
+                <div
+                  class="btn btn-primary cursor-pointer pb-2"
+                  @click="editProduct(product)"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-pen-to-square"
+                    style="vertical-align: middle"
+                  />
+                  <span class="ps-1 d-lg-none" style="vertical-align: middle">
+                    修改
+                  </span>
+                </div>
+              </td>
+              <td class="text-start text-lg-center" style="order: 9">
+                <div
+                  class="btn btn-danger cursor-pointer pb-2"
+                  @click="sureDelProduct(product)"
+                >
+                  <font-awesome-icon icon="fa-solid fa-trash-can" />
+                  <span class="ps-2 d-lg-none">刪除</span>
+                </div>
+              </td>
+            </div>
+            <td
+              class="text-start text-lg-center d-none d-lg-table-cell"
+              style="order: 8"
+            >
+              <div
+                class="btn btn-primary cursor-pointer pb-2"
+                @click="editProduct(product)"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-pen-to-square"
+                  style="vertical-align: middle"
+                />
+                <span class="ps-1 d-lg-none" style="vertical-align: middle">
+                  修改
+                </span>
               </div>
             </td>
-            <td>
-              <div class="cursor-pointer" @click="sureDelProduct(product)">
+            <td
+              class="text-start text-lg-center d-none d-lg-table-cell"
+              style="order: 9"
+            >
+              <div
+                class="btn btn-danger cursor-pointer pb-2"
+                @click="sureDelProduct(product)"
+              >
                 <font-awesome-icon icon="fa-solid fa-trash-can" />
+                <span class="ps-2 d-lg-none">刪除</span>
               </div>
             </td>
           </tr>
@@ -380,9 +419,32 @@ section {
   background: $gray-900;
 }
 
+tr {
+  border-bottom: 1px solid $gray-700;
+}
+
 td {
   text-align: center;
-  border-bottom: 1px solid $gray-700;
   padding: 12px;
+}
+
+.product-img {
+  width: 50%;
+  margin: 0 auto;
+  display: block;
+}
+
+.describe {
+  width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+  .product-img {
+    width: 100px;
+  }
+
+  .describe {
+    width: 180px;
+  }
 }
 </style>

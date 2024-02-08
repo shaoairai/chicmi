@@ -2,7 +2,7 @@
 import brandBg from "@/assets/img/brand_bg.jpg";
 import waiterBg from "@/assets/img/waiter.jpg";
 import glassBg from "@/assets/img/glassBg.jpg";
-import FeatureView from "@/components/aboutview/FeatureView.vue";
+import FeatureView from "@/views/front/aboutview/el/FeatureView.vue";
 import LoadingAni from "@/components/loading/LoadingAni.vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

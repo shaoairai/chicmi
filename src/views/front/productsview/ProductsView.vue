@@ -1,16 +1,15 @@
 <script>
 import { RouterLink } from "vue-router";
 import axios from "axios";
-import { mapActions, mapState } from "pinia";
-import { cartStore } from "../../stores/counter";
-import { login } from "../../utils/token/getToken";
+import { mapActions, mapState, storeToRefs } from "pinia";
+import { cartStore } from "@/stores/counter";
+import { login, getTokenFromCookie } from "@/utils/token/getToken";
 
 import LoadingAni from "@/components/loading/LoadingAni.vue";
 
 export default {
   data() {
     return {
-      token: "",
       // 分類
       categories: [],
       // 分類產品
@@ -23,6 +22,10 @@ export default {
       elementCenterX: 0,
       elementCenterY: 0,
       showCircle: false, // 控制圓形顯示與否
+
+      // pinia data
+      productList: [],
+      products: [],
     };
   },
   components: {
@@ -30,15 +33,6 @@ export default {
     LoadingAni,
   },
   methods: {
-    takeToken() {
-      // 從 cookie 取出 token
-      const tokenCookie = document.cookie
-        .split(";")
-        .map((cookie) => cookie.trim())
-        .find((cookie) => cookie.startsWith("token="));
-      const token = tokenCookie ? tokenCookie.split("=")[1] : null;
-      return token;
-    },
     // 取得產品列表
     async getProducts() {
       const vm = this;
@@ -50,12 +44,11 @@ export default {
         }/admin/products/all`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
       };
       await axios(conf)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // 存放所有產品
           const saveData = cartStore();
           saveData.saveProducts(res.data.products);
@@ -80,7 +73,7 @@ export default {
     },
     // 按下分類按鈕後，只顯示該分類產品
     getCateProducts(category) {
-      console.log(category);
+      // console.log(category);
       if (category) {
         // 目前點選的分類
         this.categoryName = category;
@@ -129,12 +122,6 @@ export default {
       const elementRect = elementA.getBoundingClientRect();
       vm.elementCenterX = elementRect.left + elementRect.width / 2;
       vm.elementCenterY = elementRect.top + elementRect.height / 2;
-
-      // // 啟動動畫
-      // vm.showCircle = true;
-      // setTimeout(() => {
-      //   vm.showCircle = false;
-      // }, 1000);
     },
   },
   computed: {
@@ -146,19 +133,24 @@ export default {
     // Loading show
     vm.$refs.refLoadingAni.show();
 
-    let takenToken = vm.takeToken();
-    vm.token = takenToken;
-
-    // 沒 token 就踢出去
+    const takenToken = getTokenFromCookie();
     if (!takenToken) {
-      // 登入
       await login();
-
-      takenToken = vm.takeToken();
-      vm.token = takenToken;
     }
 
     await vm.getProducts();
+
+    // pinia 放入此頁面變數
+    const store = cartStore(); // 取得該 Store
+    const { products, productList } = storeToRefs(store); // 使用 storeToRefs(store)
+    // 存入該頁變數
+    vm.products = products;
+    vm.productList = productList;
+
+    // 篩選狀態為全部
+    vm.cateProducts = vm.products;
+    // console.log(this.products);
+    vm.getCategories();
 
     // Loading hide
     vm.$refs.refLoadingAni.hide();
@@ -206,11 +198,15 @@ export default {
               :alt="product.title"
               style="height: 300px; object-fit: cover"
             />
-            <div class="d-flex justify-content-between pt-2">
-              <h5>{{ product.title }}</h5>
-              <div>NT$ {{ product.price }}</div>
+            <div class="d-flex justify-content-between pt-2 flex-wrap">
+              <h5 style="line-height: 1.5rem">
+                {{ product.title }}
+              </h5>
+              <div class="mb-2" style="line-height: 1.5rem">
+                NT$ {{ product.price }}
+              </div>
             </div>
-            <div class="row d-flex flex-column flex-md-row g-0">
+            <div class="row d-flex flex-column flex-md-row g-0 mt-auto">
               <div class="col col-md-6 pe-0 pe-md-1">
                 <RouterLink :to="'/product/' + product.id">
                   <button type="button" class="btn btn-primary w-100">
@@ -243,12 +239,6 @@ export default {
         </div>
       </div>
     </div>
-
-    <!-- 加入購物車動畫 -->
-    <!-- <div
-      class="moving-circle"
-      :style="{ top: elementCenterY + 'px', left: elementCenterX + 'px' }"
-    ></div> -->
 
     <!-- Loading -->
     <LoadingAni ref="refLoadingAni"></LoadingAni>

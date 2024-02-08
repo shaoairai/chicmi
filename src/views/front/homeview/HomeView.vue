@@ -3,14 +3,14 @@ import banner from "@/assets/img/brand_bg.jpg";
 // import banner from "/img/banner.jpg";
 import axios from "axios";
 import { mapActions, mapState, storeToRefs } from "pinia";
-import { cartStore } from "../../stores/counter";
+import { cartStore } from "@/stores/counter";
 import { RouterLink } from "vue-router";
-import { login } from "../../utils/token/getToken";
-import AboutusView from "@/components/homeview/AboutusView.vue";
-import NumberView from "@/components/homeview/NumberView.vue";
-import SloganView from "@/components/homeview/SloganView.vue";
-import NewsView from "@/components/homeview/NewsView.vue";
-import InfoView from "@/components/homeview/InfoView.vue";
+import { login, getTokenFromCookie } from "@/utils/token/getToken";
+import AboutusView from "@/views/front/homeview/el/AboutusView.vue";
+import NumberView from "@/views/front/homeview/el/NumberView.vue";
+import SloganView from "@/views/front/homeview/el/SloganView.vue";
+import NewsView from "@/views/front/homeview/el/NewsView.vue";
+import InfoView from "@/views/front/homeview/el/InfoView.vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoadingAni from "@/components/loading/LoadingAni.vue";
@@ -28,19 +28,10 @@ export default {
     };
   },
   methods: {
-    takeToken() {
-      // 從 cookie 取出 token
-      const tokenCookie = document.cookie
-        .split(";")
-        .map((cookie) => cookie.trim())
-        .find((cookie) => cookie.startsWith("token="));
-      const token = tokenCookie ? tokenCookie.split("=")[1] : null;
-      return token;
-    },
     // 取得產品列表
     async getProducts() {
       const vm = this;
-      console.log("取得產品列表");
+      // console.log("取得產品列表");
       const conf = {
         method: "GET",
         url: `${import.meta.env.VITE_APP_URL}v2/api/${
@@ -48,12 +39,11 @@ export default {
         }/admin/products/all`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
       };
       await axios(conf)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // 存放所有產品
           const saveData = cartStore();
           saveData.saveProducts(res.data.products);
@@ -124,31 +114,6 @@ export default {
         },
         "<"
       );
-      // tl.from(".banner-outer", {
-      //   y: 50,
-      //   duration: 1.5,
-      //   opacity: 0,
-      //   delay: 1,
-      // });
-      // tl.to(".gsap-banner-bg", {
-      //   opacity: 0,
-      //   y: "-10%",
-      //   scrollTrigger: {
-      //     trigger: ".gsap-banner-bg",
-      //     start: "80% 75%",
-      //     end: "80% top",
-      //     scrub: true,
-      //   },
-      // });
-      // tl.to(".banner-bg", {
-      //   width: "100%",
-      //   scrollTrigger: {
-      //     trigger: ".banner-bg",
-      //     start: "80% 75%",
-      //     end: "80% top",
-      //     scrub: true,
-      //   },
-      // });
     },
     gsapFeature() {
       this.$nextTick(() => {
@@ -188,9 +153,6 @@ export default {
       });
     },
   },
-  // computed: {
-  //   ...mapState(cartStore, ["productList", "products"]),
-  // },
   components: {
     RouterLink,
     AboutusView,
@@ -206,18 +168,9 @@ export default {
     // Loading show
     vm.$refs.refLoadingAni.show();
 
-    let takenToken = vm.takeToken();
-    vm.token = takenToken;
-
-    // 沒 token 就踢出去
+    const takenToken = getTokenFromCookie();
     if (!takenToken) {
-      // console.log("開始登入");
-      // 登入
       await login();
-      // console.log("完成登入");
-
-      takenToken = vm.takeToken();
-      vm.token = takenToken;
     }
 
     // 取資料
@@ -258,12 +211,6 @@ export default {
       class="banner-outer position-relative"
       style="height: calc(100vh - 130px); margin-top: 130px; overflow: hidden"
     >
-      <!-- <img
-        id="parallax-image"
-        class="w-100"
-        :src="imgUrl"
-        alt="Parallax Image"
-      /> -->
       <div class="gsap-banner-bg">
         <div
           class="banner-bg mx-auto"

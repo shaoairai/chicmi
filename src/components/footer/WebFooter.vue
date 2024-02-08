@@ -19,7 +19,7 @@ export default {
       <div class="container text-white py-5">
         <div class="row flex-column flex-md-row">
           <div class="col py-4">
-            <h3>吃迷 CHIC MI</h3>
+            <h3>吃迷 <span class="en">CHIC MI</span></h3>
             <div class="d-flex fs-4">
               <i class="bi bi-instagram me-2"></i>
               <i class="bi bi-facebook"></i>
@@ -29,15 +29,15 @@ export default {
             <h3>店面資訊</h3>
             <div class="d-flex flex-column text-white">
               <div class="pb-1">
-                <i class="bi bi-geo-alt-fill pe-2"></i
-                >地址：970花蓮縣花蓮市三民街52號
+                <i class="bi bi-geo-alt-fill pe-2"></i>
+                地址：407 臺中市西屯區臺灣大道三段 99 號 1 樓
               </div>
               <div class="pb-1">
                 <i class="bi bi-calendar-week-fill pe-2"></i
-                >營業時間：11:00~20:00(週一公休)
+                >營業時間：11:00~21:00(週一公休)
               </div>
               <div class="pb-1">
-                <i class="bi bi-telephone-fill pe-2"></i>聯絡電話：(03)831-1131
+                <i class="bi bi-telephone-fill pe-2"></i>聯絡電話：(04)2228-9111
               </div>
             </div>
           </div>

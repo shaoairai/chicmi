@@ -1,11 +1,11 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
-import WebFooter from "@/components/WebFooter.vue";
+import WebFooter from "@/components/footer/WebFooter.vue";
 
 import { storeToRefs, mapState } from "pinia";
 import { cartStore } from "@/stores/counter.js";
 
-console.log(import.meta.env.VITE_APP_URL);
+// console.log(import.meta.env.VITE_APP_URL);
 
 export default {
   data() {
@@ -18,14 +18,11 @@ export default {
     RouterView,
     WebFooter,
   },
-  computed: {
-    // ...mapState(cartStore, ["productList"]),
-  },
   mounted() {
     const store = cartStore();
     const { productList } = storeToRefs(store);
-    console.log("productList");
-    console.log(productList);
+    // console.log("productList");
+    // console.log(productList);
     this.productList = productList;
 
     const vm = this;
@@ -37,8 +34,8 @@ export default {
       });
 
       if (storedCart != null) {
-        console.log("有存入");
-        console.log(storedCart);
+        // console.log("有存入");
+        // console.log(storedCart);
         const cartStoreFunc = cartStore();
         cartStoreFunc.setProductList([...storedCart]);
       }

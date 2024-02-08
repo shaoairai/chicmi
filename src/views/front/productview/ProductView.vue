@@ -1,17 +1,16 @@
 <script>
 import { RouterLink } from "vue-router";
 import { mapState, mapActions } from "pinia";
-import { cartStore } from "../../stores/counter";
+import { cartStore } from "@/stores/counter";
 import axios from "axios";
 
-import { login } from "../../utils/token/getToken";
+import { login, getTokenFromCookie } from "@/utils/token/getToken";
 import LoadingAni from "@/components/loading/LoadingAni.vue";
 
 export default {
   data() {
     return {
       text: "Products頁",
-      token: "",
     };
   },
   computed: {
@@ -36,12 +35,11 @@ export default {
         }/admin/products/all`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${this.token}`,
         },
       };
       await axios(conf)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // 存放所有產品
           const saveData = cartStore();
           saveData.saveProducts(res.data.products);
@@ -77,19 +75,12 @@ export default {
     // Loading show
     vm.$refs.refLoadingAni.show();
 
-    console.log("#router", this.$route.params.id);
-
-    let takenToken = vm.takeToken();
-    vm.token = takenToken;
-
-    // 沒 token 就踢出去
+    const takenToken = getTokenFromCookie();
     if (!takenToken) {
-      // 登入
       await login();
-
-      takenToken = vm.takeToken();
-      vm.token = takenToken;
     }
+
+    // console.log("#router", this.$route.params.id);
 
     // 取得所有產品列表
     await vm.getProducts();

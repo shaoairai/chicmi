@@ -1,5 +1,5 @@
 <script>
-import InfoView from "@/components/homeview/InfoView.vue";
+import InfoView from "@/views/front/homeview/el/InfoView.vue";
 import LoadingAni from "@/components/loading/LoadingAni.vue";
 
 export default {
@@ -9,6 +9,11 @@ export default {
       titleBg:
         "https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
     };
+  },
+  methods: {
+    sendContact() {
+      alert("Demo頁面，請勿送出！");
+    },
   },
   components: {
     InfoView,
@@ -153,7 +158,12 @@ export default {
             <div class="col-md-2"></div>
             <div class="col-md-10 text-end">
               <input type="reset" value="重設" class="btn btn-secondary me-2" />
-              <input type="submit" value="送出" class="btn btn-primary" />
+              <input
+                type="button"
+                value="送出"
+                class="btn btn-primary"
+                @click="sendContact"
+              />
             </div>
           </div>
         </form>
